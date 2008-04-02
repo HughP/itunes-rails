@@ -1,11 +1,13 @@
-<% if @offset %>
 <div class="pagination">
+<% if @offset %>
   <%= link_to("prev #{@limit}", url_for_with_current_params(:offset => @offset - 500)) if @offset >= @limit  %> 
   <% if @more == @limit && @offset >= @limit %>
     :
   <% end %>
   <%= link_to("next #{@more}", url_for_with_current_params(:offset => @offset + 500)) if @more == @limit %> 
 (<%= @total || @tracks.size %> tracks total)
-</div>
+<% elsif params[:q] %>
+  <%= pluralize(@tracks.size, "result") %>
 <% end %>
+</div>
 
