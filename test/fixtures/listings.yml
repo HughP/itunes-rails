@@ -1,0 +1,15 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  track_id: 1
+  playlist_id: 1
+  name: MyString
+  index: 1
+  updated_at: 2008-03-31 23:28:49
+
+two:
+  track_id: 1
+  playlist_id: 1
+  name: MyString
+  index: 1
+  updated_at: 2008-03-31 23:28:49

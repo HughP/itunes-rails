@@ -1,0 +1,56 @@
+
+body {
+  font-family: Helvetica, Arial;
+  font-size: small;
+}
+.playlist-title {
+  display:inline
+}
+#nav {
+  position:absolute;
+  right: 10px;
+}
+#browser {
+  width: 69%;
+  padding: 1em;
+  float:left;
+  border-right: 1px dotted #ccc;
+}
+#queue {
+  width: 25%;
+  float: left;
+  padding: 1em;
+
+}
+
+.pagination {
+  margin: 5px 0; 
+}
+
+table {
+  table-layout: fixed;
+  width: 100%;
+}
+table.queue tr.current  {
+  background-color: #FFE5A8;
+}
+td {
+  vertical-align: top;
+}
+col#c0 { width: 7em }
+col#c1 { width: 25%}
+col#c2 { width: 40% }
+col#c3 { }
+.odd {
+  background-color: #EEE;
+}
+
+.even {
+  background-color: white;  
+}
+
+#byline {
+  border: 1px dotted #ccc;
+  padding: 0 1.4em;
+  margin-top: 40px;
+}

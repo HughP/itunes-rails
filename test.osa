@@ -1,0 +1,1 @@
+tell application "iTunes" to index of current track as string

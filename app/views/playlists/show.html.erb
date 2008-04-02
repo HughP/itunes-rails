@@ -1,0 +1,34 @@
+<h3 class="playlist-title">playlist:</h3>
+<h1 class="playlist-title"><%= @playlist.name %></h1>
+<%=link_to "up", "/" %>
+<%= render :partial => 'paginator' %>
+<table style="margin-top: 1em">
+  <colgroup>
+    <col id="c0"/>
+    <col id="c1"/>
+    <col id="c2"/>
+    <col id="c3"/>
+  </colgroup>
+  <thead>
+    <th></th>
+    <th><%= link_to "artist", :order => "artist" %></th>
+    <th><%= link_to "track", :order => "name" %></th>
+    <th><%= link_to "album", :order => "album" %></th>
+  </thead>
+<% @tracks.each do |track| %>
+  <tr class="<%= cycle('odd', 'even') %>">
+    <td>
+      <%= link_to 'que', queue_track_path(:id => track.databaseID, :q => params[:q], :order => params[:order]), :method => :put %> :
+      <%= 'nex'%> :
+      <%= 'pla'%>
+    </td>
+    <td><%= track.artist %></td>
+    <td>
+      <%= track.name %>
+    </td>
+    <td><%= track.album %></td>
+  </tr>
+<% end %>
+</table>
+
+<%= render :partial => 'paginator' %>
