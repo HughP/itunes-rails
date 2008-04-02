@@ -11,15 +11,15 @@ class PlaylistsController < ApplicationController
       @tracks = @playlist.searchFor_only(params[:q], nil)
     else
       # no search, just list
+      @offset = (params[:offset] || 0).to_i
+      @limit = 500
       if order
-        @tracks = @playlist.tracks.sort_by {|t| t.send(order)}[0,500]
+        @tracks = @playlist.tracks.sort_by {|t| t.send(order)}[@offset,@limit]
       else
-        @offset = (params[:offset] || 0).to_i
-        @limit = 500
         @tracks = @playlist.tracks[@offset,@limit]
-        @total = @playlist.tracks.size 
-        @more = [@total - @offset, @limit].min
       end
+      @total = @playlist.tracks.size 
+      @more = [@total - @offset, @limit].min
     end
   end
 

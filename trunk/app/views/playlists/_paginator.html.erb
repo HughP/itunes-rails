@@ -1,3 +1,4 @@
+<% if @offset %>
 <div class="pagination">
   <%= link_to("prev #{@limit}", url_for(:offset => @offset - 500)) if @offset >= @limit  %> 
   <% if @more == @limit && @offset >= @limit %>
@@ -6,3 +7,4 @@
   <%= link_to("next #{@more}", url_for(:offset => @offset + 500)) if @more == @limit %> 
 (<%= @total || @tracks.size %> tracks total)
 </div>
+<% end %>
