@@ -25,4 +25,19 @@ class QueuedTracksController < ApplicationController
     redirect_to :back
   end
 
+  def play_now
+    @current_track_index
+    index = params[:id].to_i
+    if @current_track_index < index
+      (index - @current_track_index).times do 
+        @iTunes.nextTrack
+      end
+    else #rewind
+      (@current_track_index - index).times do 
+        @iTunes.previousTrack
+      end
+    end
+    redirect_to :back
+  end
+
 end
