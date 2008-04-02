@@ -1,0 +1,57 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<title>itunes betahouse</title>
+	<meta name="generator" content="BBEdit 8.7" />
+  <%= javascript_include_tag :defaults %>
+  <%= stylesheet_link_tag "itunes" %>
+</head>
+<body>
+
+  <div id="nav">
+    <%=link_to "home", "/" %>
+    | <%= session[:username] || "anonymous" %>
+  </div>
+  <div id="browser">
+    <p>click "que" to add to the end of queue. click "pla" to add to the top.</p>
+    <form action="<%= url_for() %>" method="get">
+      <input type="text" name="q" value="<%= params[:q]  %>"/>
+      <input type="submit" value="search"/>
+    </form>
+    <%= yield %>
+  </div>
+
+  <div id="queue">
+    <form action="/users" method="post">
+      your name (to credit your queuings):<br/>
+      <input type="text" name="username" value="<%= session[:username] %>"/>
+      <input type="submit" value="set"/>
+    </form>
+    <p>status: iTunes is <%= @state %></p>
+    <div>
+      <% form_tag(url_for({}), :method => :get ) do %>
+      volume: 
+        <%= text_field_tag "volume", @iTunes.soundVolume, {:size => 3} %>
+        <%= submit_tag "change volume" %>
+      <% end %>
+    </div>
+
+    <br/>
+    <%= link_to "skip to next", :controller => "queued_tracks", :action => "skip_current"%> 
+    / <%= link_to "pause/play", :controller => "queued_tracks", :action => "playpause"%>
+    / <%= link_to "previous track", :controller => "queued_tracks", :action => "previous_track"%>
+    <p><%= link_to "reload page to update" %></p>
+    <h2>queue</h2>
+    
+    <%= render :partial => 'queued_tracks/queued_tracks' %>
+
+    <div id="byline">
+      <h3>rails wrapper for itunes</h3>
+      <p>version 0.1</p>
+      <p>by dan choi and mackenzie cowell for betahouse</p>
+    </div>
+  </div>
+
+</body>
+</html>

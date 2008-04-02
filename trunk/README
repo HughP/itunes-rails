@@ -1,0 +1,7 @@
+itunes-rails is a web server wrapper for your local iTunes application. 
+
+More documentation will follow.
+
+To use, just start the Rails application and hit the app with a web browser. There is no database. 
+
+This project was hatched in Betahouse, Cambridge, MA. It is subject to the MIT license.

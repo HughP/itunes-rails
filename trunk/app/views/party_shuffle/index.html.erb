@@ -1,0 +1,12 @@
+<h1>PartyShuffle#index</h1>
+<p><%= @playlist.name %></p>
+<table>
+<% @playlist.tracks.each_with_index do |track,index| %>
+  <tr>
+    <td><%= link_to index, :action => :play_track, :id => index %></td>
+    <td><%= track.name %></td>
+    <td><%= track.artist %></td>
+    <td><%= track.album %></td>
+  </tr>
+<% end %>
+</table>

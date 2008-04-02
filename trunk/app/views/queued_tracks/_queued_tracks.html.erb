@@ -1,0 +1,28 @@
+<% if @current_track_index == 0 %>
+  <p>The playlist is finished playing</p>
+<% end %>
+
+<table class="queue">
+  <colgroup>
+    <col style="width: 2em"/>
+    <col style="width: 70%"/>
+    <col />
+  </colgroup>
+  <% @queued_tracks.reverse.each do |track| %>
+    <% index = @queue_index_table[track.databaseID] %>
+  <tr class="<%= cycle('odd', 'even') %> <%= (index + 1 == @current_track_index) ? 'current' : nil %>">
+    <td>
+      <%= index + 1 %>
+      <br/>
+      <%= link_to "[x]", :controller => "queued_tracks", :action => :destroy, :id => index %>
+    </td>
+    <td><%= track.artist %>
+      <br/><%= track.name %> 
+      <br/><%= track.album %>
+    </td>
+    <td>
+      <%= track.comment %>
+    </td>
+  </tr>
+<% end %>
+</table>
