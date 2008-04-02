@@ -14,7 +14,7 @@
     | <%= session[:username] || "anonymous" %>
   </div>
   <div id="browser">
-    <p>click "que" to add to the end of queue. click "pla" to add to the top.</p>
+    <p>click "que" to add to the end of queue.</p>
     <form action="<%= url_for() %>" method="get">
       <input type="text" name="q" value="<%= params[:q]  %>"/>
       <input type="submit" value="search"/>

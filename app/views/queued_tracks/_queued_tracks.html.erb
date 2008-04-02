@@ -8,13 +8,15 @@
     <col style="width: 70%"/>
     <col />
   </colgroup>
-  <% @queued_tracks.reverse.each do |track| %>
-    <% index = @queue_index_table[track.databaseID] %>
+  <% @queued_tracks.reverse.each_with_index do |track, i| %>
+    <% index = @queued_tracks.size - i - 1  %>
+    <%= index  %>
   <tr class="<%= cycle('odd', 'even') %> <%= (index + 1 == @current_track_index) ? 'current' : nil %>">
     <td>
       <%= index + 1 %>
       <br/>
       <%= link_to "[x]", :controller => "queued_tracks", :action => :destroy, :id => index %>
+      <%= link_to "pla", :controller => "queued_tracks", :action => :play_now, :id => index %>
     </td>
     <td><%= track.artist %>
       <br/><%= track.name %> 

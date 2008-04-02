@@ -24,14 +24,7 @@ class ApplicationController < ActionController::Base
 
   def get_queue_data
     @queued_tracks = @iTunes.queue.tracks
-    # look up for real index of track in live queue. We need this because we'll
-    # invert the queue for display
-    @queue_index_table = {}
-    @queued_tracks.each_with_index do |x, i| 
-      @queue_index_table[x.databaseID] = i 
-    end
 
-    logger.debug @queue_index_table.inspect
     # get current track index, but check for status first?
     # or just use error handling
     begin

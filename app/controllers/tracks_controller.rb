@@ -1,16 +1,6 @@
 class TracksController < ApplicationController
 
   before_filter :find_track
-  def show
-    q = QueuedTrack.create(:track => Track.find_by_database_id(@track.databaseID),
-                           :queued_by => session[:username],
-                           :playlist => Playlist.find_by_index(params[:playlist_id]))
-    q.move_to_top
-    q.play
-    # changed from a typical show action
-    redirect
-  end
-
   def queue
     track = @iTunes.find_track(params[:id].to_i)
     track.comment = session[:username]
@@ -18,7 +8,7 @@ class TracksController < ApplicationController
     logger.debug "queuing, ITUNES STATE:"
     logger.debug @state
 
-    if @state.strip.to_s == "stopped"
+    if @state.strip.to_s == "stopped" 
       logger.debug "TRYING TO PLAY"
       @iTunes.queue.playOnce(1)
       # but need to skip to the head of the queue
