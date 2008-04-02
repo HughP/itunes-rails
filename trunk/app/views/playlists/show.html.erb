@@ -19,8 +19,6 @@
   <tr class="<%= cycle('odd', 'even') %>">
     <td>
       <%= link_to 'que', queue_track_path(:id => track.databaseID, :q => params[:q], :order => params[:order]), :method => :put %> :
-      <%= 'nex'%> :
-      <%= 'pla'%>
     </td>
     <td><%= track.artist %></td>
     <td>
