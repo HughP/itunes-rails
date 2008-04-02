@@ -28,6 +28,9 @@ class QueuedTracksController < ApplicationController
   def play_now
     @current_track_index
     index = params[:id].to_i
+    if @state.strip.to_s == "stopped"
+      @iTunes.queue.playOnce(1)
+    end
     if @current_track_index < index
       (index - @current_track_index + 1).times do 
         @iTunes.nextTrack

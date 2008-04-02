@@ -9,7 +9,7 @@
     <col />
   </colgroup>
   <% @queued_tracks.reverse.each_with_index do |track, i| %>
-    <% index = @queued_tracks.size - i - 1  %>
+  <% index = @queued_tracks.size - i - 1  %>
   <tr class="<%= cycle('odd', 'even') %> <%= (index + 1 == @current_track_index) ? 'current' : nil %>">
     <td>
       <%= index + 1 %>
