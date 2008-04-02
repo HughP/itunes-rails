@@ -29,11 +29,11 @@ class QueuedTracksController < ApplicationController
     @current_track_index
     index = params[:id].to_i
     if @current_track_index < index
-      (index - @current_track_index).times do 
+      (index - @current_track_index + 1).times do 
         @iTunes.nextTrack
       end
     else #rewind
-      (@current_track_index - index).times do 
+      (@current_track_index - index - 1).times do 
         @iTunes.previousTrack
       end
     end
