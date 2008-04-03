@@ -3,7 +3,7 @@ body {
   font-family: Helvetica, Arial;
   font-size: small;
 }
-#progress {
+#progress, #queue-changing {
   position:fixed;
   top:0;
   right:0;
