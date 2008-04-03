@@ -3,7 +3,7 @@ class TracksController < ApplicationController
   before_filter :find_track
   def queue
     track = @iTunes.find_track(params[:id].to_i)
-    track.comment = session[:username]
+    track.comment = session[:username] || "" # credit for queuing the song
     @iTunes.queue_track(track)
     logger.debug "queuing, ITUNES STATE:"
     logger.debug @state
