@@ -23,6 +23,14 @@ class QueuedTracksController < ApplicationController
     end
   end
 
+  def start_queue
+    @iTunes.stop
+    @iTunes.queue.playOnce(1)
+    respond_to do |format|
+      format.html { redirect_to :back }
+      format.js { reload_state_data && render( :update ) { | page | page.replace("queue-box", :partial => "queued_tracks") } } 
+    end
+  end
 
   def playpause
     logger.debug("MARK A")
@@ -70,23 +78,12 @@ class QueuedTracksController < ApplicationController
     index = params[:id].to_i
     if @state.strip.to_s != "playing"
       logger.debug "Trying to start playlist..."
-      @iTunes.stop
-      @iTunes.queue.playOnce(1)
-      index.times do 
-        @iTunes.nextTrack
-      end
-    else
-      if @current_track_index - 1 < index
-        (index - @current_track_index + 1).times do 
-          @iTunes.nextTrack
-        end
-      else #rewind
-        (@current_track_index - index - 1).times do 
-          @iTunes.previousTrack
-        end
-      end
     end
-
+    @iTunes.stop
+    @iTunes.queue.playOnce(1)
+    index.times do 
+      @iTunes.nextTrack
+    end
     @iTunes.create_artwork_for_current_track
     respond_to do |format|
       format.html { redirect_to :back }

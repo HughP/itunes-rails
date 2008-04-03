@@ -4,8 +4,16 @@
     <input type="text" name="username" value="<%= session[:username] %>"/>
     <input type="submit" value="set"/>
   <% end %>
-  <p>logged in as: <%= session[:username].blank? ? "anonymous" : session[:username] %></p>
-  <p>status: iTunes is <%= @state %>
+  <p>
+  logged in as: <%= session[:username].blank? ? "anonymous" : session[:username] %><br/>
+  status: iTunes is <%= @state %> <br/>
+  <% if @state != 'stopped' %>
+    current playlist: <%= @iTunes.currentPlaylist.name %>
+  <% end %>
+  <% if @iTunes.currentPlaylist != ITunes::QUEUE_PLAYLIST %>
+    <br/><%= link_to_remote "start playing the queue", :url => {:controller => "queued_tracks", :action => "start_queue"},
+    :loading => "$('queue-changing').show()", :complete => "$('queue-changing').hide()"  %>
+  <% end %>
   </p>
   <div>
     <% form_remote_tag(:url => url_for({}), :method => :get ) do %>
