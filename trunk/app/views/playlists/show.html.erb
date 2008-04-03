@@ -19,7 +19,8 @@
 <% @tracks.each do |track| %>
   <tr class="<%= cycle('odd', 'even') %>">
     <td>
-      <%= link_to_remote 'que', :url => queue_track_path(:id => track.databaseID, :q => params[:q], :order => params[:order]), :method => :put %> :
+      <%= link_to_remote 'que', :url => queue_track_path(:id => track.databaseID, :q => params[:q], :order => params[:order]), :method => :put,
+        :loading => "$('progress').show()", :complete => "$('progress').hide()" %> :
     </td>
     <td><%= track.artist %></td>
     <td>

@@ -19,7 +19,12 @@ class TracksController < ApplicationController
     end
     respond_to do |format|
       format.html { redirect_to :back }
-      format.js { reload_state_data && render( :update ) { | page | page.replace("queue-box", :partial => "queued_tracks/queued_tracks") } } 
+      format.js { 
+        reload_state_data 
+        render( :update ) { | page | 
+          page.replace("queue-box", :partial => "queued_tracks/queued_tracks") 
+        } 
+      } 
     end
   end
 
