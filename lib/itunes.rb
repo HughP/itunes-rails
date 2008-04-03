@@ -73,6 +73,33 @@ class ITunes
     add_track_to_playlist(track, queue)
   end
 
-  def artwork_for(track)
+  def create_artwork_for_current_track
+    extension = `osascript -e '
+    tell application "iTunes"
+      set theTrack to current track
+      set artData to (data of artwork 1 of theTrack) as picture
+      set artFormat to (format of artwork 1 of theTrack) as string
+      
+      if artFormat contains "JPEG" then
+        set extension to ".jpg"
+      else if artFormat contains "PNG" then
+        set extension to ".png"
+      end if
+      set fileName to "test"
+      set tempArtFile to "#{RAILS_ROOT}/public/tempfile" & extension
+      set fileRef to (open for access tempArtFile write permission 1)
+      write artData starting at 0 to fileRef as picture
+      close access fileRef
+      return extension as string
+    end tell' `
+
+    filename = "%s-%s" % [@iTunes.currentTrack.artist , @iTunes.currentTrack.album ]
+    `tail -c+223 #{RAILS_ROOT}/public/tempfile.* > #{RAILS_ROOT}/public/artwork/#{filename}#{extension.strip} && rm #{RAILS_ROOT}/public/tempfile.*`
+  end
+
+  def current_artwork_filename
+    return "currentTrack.jpg" if File.exist?( RAILS_ROOT + "/currentTrack.jpg" )
+    return "currentTrack.png" if File.exist?( RAILS_ROOT + "/currentTrack.png" )
+    nil
   end
 end

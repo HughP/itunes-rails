@@ -66,7 +66,7 @@ describe ITunes do
   end
 
   it "should save a track's album artwork to a file" do
-    pending
+    @i.create_artwork_for_current_track
   end
 end
 

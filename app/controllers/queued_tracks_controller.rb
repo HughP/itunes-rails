@@ -45,6 +45,8 @@ class QueuedTracksController < ApplicationController
         end
       end
     end
+
+    @iTunes.create_artwork_for_current_track
     redirect_to :back
   end
 
