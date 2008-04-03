@@ -1,3 +1,33 @@
+<div id="queue-box">
+    <% form_remote_tag( :url => users_path, :method => :post ) do %>
+      your name (to credit your queuings):<br/>
+      <input type="text" name="username" value="<%= session[:username] %>"/>
+      <input type="submit" value="set"/>
+    <% end %>
+    <p>logged in as: <%= session[:username].blank? ? "anonymous" : session[:username] %></p>
+    <p>status: iTunes is <%= @state %>
+    </p>
+    <div>
+      <% form_remote_tag(:url => url_for({}), :method => :get ) do %>
+      volume: 
+        <%= text_field_tag "volume", @iTunes.soundVolume, {:size => 3} %>
+        <%= submit_tag "change volume" %>
+      <% end %>
+    </div>
+
+    <br/>
+    <%= link_to_remote "skip to next", :url => {:controller => "queued_tracks", :action => "skip_current"} %> 
+    / <%= link_to_remote "pause/play", :url => {:controller => "queued_tracks", :action => "playpause"} %>
+    / <%= link_to_remote "previous track", :url => {:controller => "queued_tracks", :action => "previous_track"} %>
+    <p><%= link_to_remote "refresh itunes info", :url => {:controller => "queued_tracks", :action => "reload_queue_box" } %>
+    / <%= link_to_remote "toggle shuffle mode", :url => {:controller => "queued_tracks", :action => "toggle_shuffle" } %>
+    <h2>queue
+      <% if @iTunes.queue.shuffle == 1 %>
+      <small>(in shuffle mode)</small>
+      <% end %>
+    </h2>
+    
+    <%= album_art_image_tag( @iTunes.artwork_file(@iTunes.currentTrack)) unless @state == "stopped" %>
 <% if @current_track_index == 0 %>
   <p>The playlist is finished playing</p>
 <% end %>
@@ -14,8 +44,8 @@
     <td>
       <%= index + 1 %>
       <br/>
-      <%= link_to "[x]", :controller => "queued_tracks", :action => :destroy, :id => index %>
-      <%= link_to "pla", :controller => "queued_tracks", :action => :play_now, :id => index %>
+      <%= link_to_remote "[x]", :url => { :controller => "queued_tracks", :action => :destroy, :id => index }  %>
+      <%= link_to_remote "pla", :url => { :controller => "queued_tracks", :action => :play_now, :id => index } %>
     </td>
     <td><%= track.artist %>
       <br/><%= track.name %> 
@@ -27,3 +57,4 @@
   </tr>
 <% end %>
 </table>
+</div>

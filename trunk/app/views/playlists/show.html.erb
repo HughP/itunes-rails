@@ -1,6 +1,7 @@
 <h3 class="playlist-title">playlist:</h3>
 <h1 class="playlist-title"><%= @playlist.name %></h1>
-<%=link_to "up", "/" %>
+<%=link_to "up", "/" %> :
+<%=link_to "clear ordering or search" %>
 <%= render :partial => 'paginator' %>
 <table style="margin-top: 1em">
   <colgroup>
@@ -9,16 +10,16 @@
     <col id="c2"/>
     <col id="c3"/>
   </colgroup>
-  <thead>
+  <thead style="text-align:left">
     <th></th>
-    <th><%= link_to "artist", :order => "artist" %></th>
-    <th><%= link_to "track", :order => "name" %></th>
-    <th><%= link_to "album", :order => "album" %></th>
+    <th><%= link_to_unless params[:order] == "artist" || params.has_key?(:q), "artist", :order => "artist" %></th>
+    <th><%= link_to_unless params[:order] == "name" || params.has_key?(:q), "track", :order => "name", :q => params[:q] %></th>
+    <th><%= link_to_unless params[:order] == "album" || params.has_key?(:q), "album", :order => "album", :q => params[:q] %></th>
   </thead>
 <% @tracks.each do |track| %>
   <tr class="<%= cycle('odd', 'even') %>">
     <td>
-      <%= link_to 'que', queue_track_path(:id => track.databaseID, :q => params[:q], :order => params[:order]), :method => :put %> :
+      <%= link_to_remote 'que', :url => queue_track_path(:id => track.databaseID, :q => params[:q], :order => params[:order]), :method => :put %> :
     </td>
     <td><%= track.artist %></td>
     <td>

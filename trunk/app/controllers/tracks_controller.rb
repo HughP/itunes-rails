@@ -17,11 +17,10 @@ class TracksController < ApplicationController
         @iTunes.nextTrack
       end
     end
-    redirect
-  end
-
-  def redirect
-    redirect_to :back
+    respond_to do |format|
+      format.html { redirect_to :back }
+      format.js { reload_state_data && render( :update ) { | page | page.replace("queue-box", :partial => "queued_tracks/queued_tracks") } } 
+    end
   end
 
   def find_track

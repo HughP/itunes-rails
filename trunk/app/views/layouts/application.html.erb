@@ -11,10 +11,9 @@
 
   <div id="nav">
     <%=link_to "home", "/" %>
-    | <%= session[:username] || "anonymous" %>
   </div>
   <div id="browser">
-    <p>click "que" to add to the end of queue.</p>
+    <p>click "que" to add to the end of queue. beware that ordering by artist, track, or album is currently slow for very large playlists.</p>
     <form action="<%= url_for() %>" method="get">
       <input type="text" name="q" value="<%= params[:q]  %>"/>
       <input type="submit" value="search"/>
@@ -23,36 +22,7 @@
   </div>
 
   <div id="queue">
-    <form action="/users" method="post">
-      your name (to credit your queuings):<br/>
-      <input type="text" name="username" value="<%= session[:username] %>"/>
-      <input type="submit" value="set"/>
-    </form>
-    <p>status: iTunes is <%= @state %>
-    </p>
-    <div>
-      <% form_tag(url_for({}), :method => :get ) do %>
-      volume: 
-        <%= text_field_tag "volume", @iTunes.soundVolume, {:size => 3} %>
-        <%= submit_tag "change volume" %>
-      <% end %>
-    </div>
-
-    <br/>
-    <%= link_to "skip to next", :controller => "queued_tracks", :action => "skip_current"%> 
-    / <%= link_to "pause/play", :controller => "queued_tracks", :action => "playpause"%>
-    / <%= link_to "previous track", :controller => "queued_tracks", :action => "previous_track"%>
-    <p><%= link_to "reload page to update" %>
-    / <%= link_to "toggle shuffle mode", :controller => "queued_tracks", :action => "toggle_shuffle" %>
-    <h2>queue
-      <% if @iTunes.queue.shuffle == 1 %>
-      <small>(in shuffle mode)</small>
-      <% end %>
-    </h2>
-    
-    <%= album_art_image_tag( @iTunes.artwork_file(@iTunes.currentTrack)) unless @state == "stopped" %>
     <%= render :partial => 'queued_tracks/queued_tracks' %>
-
     <div id="byline">
       <h3>rails wrapper for itunes</h3>
       <p>version 0.1</p>

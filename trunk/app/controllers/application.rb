@@ -9,6 +9,13 @@ class ApplicationController < ActionController::Base
   # Uncomment the :secret if you're not using the cookie session store
 #  protect_from_forgery # :secret => '3eab6503a5d8993ac2a3fa6ff8ef072b'
 
+
+  # This is called toward the end of ajax actions
+  def reload_state_data
+    find_itunes
+    get_queue_data
+  end
+
   def find_itunes
     @iTunes ||= ITUNES #OSX::SBApplication.applicationWithBundleIdentifier_("com.apple.iTunes")
     @state = `osascript -e 'tell application "iTunes" to player state as string'`

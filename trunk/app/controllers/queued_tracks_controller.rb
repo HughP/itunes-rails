@@ -1,4 +1,5 @@
 class QueuedTracksController < ApplicationController
+  skip_before_filter :find_itunes, :get_queue_data, :only => :test_ajax
 
   def index
   end
@@ -7,22 +8,52 @@ class QueuedTracksController < ApplicationController
     # the params :id is an index
     index = params[:id].to_i
     @iTunes.queue.tracks.removeObjectAtIndex(index)
-    redirect_to :back
+    respond_to do |format|
+      format.html { redirect_to :back }
+      format.js { reload_state_data && render( :update ) { | page | page.replace("queue-box", :partial => "queued_tracks") } } 
+    end
   end
 
   def playpause
+    logger.debug("MARK A")
     @iTunes.playpause()
-    redirect_to :back
+    logger.debug("MARK A")
+    respond_to do |format|
+      format.js do
+        logger.debug("MARK B")
+        reload_state_data 
+        render( :update ) { | page | page.replace("queue-box", :partial => "queued_tracks") } 
+      end
+      format.html { redirect_to :back }
+    end
   end
 
   def skip_current
     @iTunes.nextTrack
-    redirect_to :back
+    respond_to do |format|
+      format.html { redirect_to :back }
+      format.js { reload_state_data && render( :update ) { | page | page.replace("queue-box", :partial => "queued_tracks") } } 
+    end
+  end
+
+  def reload_queue_box
+    respond_to do |format|
+      format.html { redirect_to :back }
+      format.js { 
+        reload_state_data 
+        render( :update ) { | page | 
+          page.replace("queue-box", :partial => "queued_tracks") 
+        } 
+      } 
+    end
   end
 
   def previous_track
     @iTunes.previousTrack
-    redirect_to :back
+    respond_to do |format|
+      format.html { redirect_to :back }
+      format.js { reload_state_data && render( :update ) { | page | page.replace("queue-box", :partial => "queued_tracks") } } 
+    end
   end
 
   def play_now
@@ -47,12 +78,19 @@ class QueuedTracksController < ApplicationController
     end
 
     @iTunes.create_artwork_for_current_track
-    redirect_to :back
+    respond_to do |format|
+      format.html { redirect_to :back }
+      format.js { reload_state_data && render( :update ) { | page | page.replace("queue-box", :partial => "queued_tracks") } } 
+    end
   end
 
   def toggle_shuffle
     logger.debug "toggling shuffle mode on for queue"
     @iTunes.queue.shuffle = @iTunes.queue.shuffle == 0 ? true : false
-    redirect_to :back
+    respond_to do |format|
+      format.html { redirect_to :back }
+      format.js { reload_state_data && render( :update ) { | page | page.replace("queue-box", :partial => "queued_tracks") } } 
+    end
   end
+
 end
