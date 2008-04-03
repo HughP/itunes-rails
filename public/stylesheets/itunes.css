@@ -3,6 +3,14 @@ body {
   font-family: Helvetica, Arial;
   font-size: small;
 }
+#progress {
+  position:fixed;
+  top:0;
+  right:0;
+  background-color:red;
+  color:white;
+  padding: 5px;
+}
 .playlist-title {
   display:inline
 }
