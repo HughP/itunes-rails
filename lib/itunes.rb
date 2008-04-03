@@ -72,4 +72,7 @@ class ITunes
   def queue_track(track)
     add_track_to_playlist(track, queue)
   end
+
+  def artwork_for(track)
+  end
 end

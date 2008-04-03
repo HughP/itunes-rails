@@ -60,8 +60,13 @@ describe ITunes do
   end
 
   it "should queue a track" do
+    pending "tested" 
     track = @i.find_track 2674
     @i.queue_track(track)
+  end
+
+  it "should save a track's album artwork to a file" do
+    pending
   end
 end
 

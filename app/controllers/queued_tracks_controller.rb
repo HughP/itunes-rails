@@ -31,14 +31,18 @@ class QueuedTracksController < ApplicationController
       logger.debug "Trying to start playlist..."
       @iTunes.stop
       @iTunes.queue.playOnce(1)
-    end
-    if @current_track_index - 1 < index
-      (index - @current_track_index + 1).times do 
+      index.times do 
         @iTunes.nextTrack
       end
-    else #rewind
-      (@current_track_index - index - 1).times do 
-        @iTunes.previousTrack
+    else
+      if @current_track_index - 1 < index
+        (index - @current_track_index + 1).times do 
+          @iTunes.nextTrack
+        end
+      else #rewind
+        (@current_track_index - index - 1).times do 
+          @iTunes.previousTrack
+        end
       end
     end
     redirect_to :back
