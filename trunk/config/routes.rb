@@ -31,7 +31,7 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :sources do |source|
     source.resources :playlists 
   end
-  map.resources :playlists 
+  map.resources :playlists
   map.resources :tracks, :member => {:queue => :put}
 
   map.connect '/queued_tracks/:action', :controller => 'queued_tracks'
