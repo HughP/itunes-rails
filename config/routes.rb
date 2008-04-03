@@ -34,7 +34,7 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :playlists
   map.resources :tracks, :member => {:queue => :put}
 
-  map.connect '/queued_tracks/:action', :controller => 'queued_tracks'
+  map.connect '/queued_tracks/:action.:format', :controller => 'queued_tracks'
   map.connect '/party_shuffle', :controller => 'party_shuffle'
   map.resources :users
 

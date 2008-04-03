@@ -62,5 +62,5 @@ require 'osx/cocoa'
 OSX.require_framework 'ScriptingBridge'
 require 'lib/itunes.rb' 
 ITUNES = ITunes.new
-ITUNES_STATE = { 'stopped' => 1800426323, 'playing' => 1800426320, 'paused' => 1800426352 }
+
 
