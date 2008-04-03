@@ -14,6 +14,16 @@ class QueuedTracksController < ApplicationController
     end
   end
 
+  # Empties the whole queue
+  def clear
+    @iTunes.queue.tracks.removeAllObjects
+    respond_to do |format|
+      format.html { redirect_to :back }
+      format.js { reload_state_data && render( :update ) { | page | page.replace("queue-box", :partial => "queued_tracks") } } 
+    end
+  end
+
+
   def playpause
     logger.debug("MARK A")
     @iTunes.playpause()
