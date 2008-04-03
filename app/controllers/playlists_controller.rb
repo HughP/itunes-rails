@@ -26,11 +26,13 @@ class PlaylistsController < ApplicationController
   def index
   end
 
+  private
   def find_playlist
     @source = @iTunes.sources[params[:source_id].to_i]
     # just assume this is source 0 (Library)
     #@playlist = Playlist.find_by_index(params[:id]) 
     @playlist = @source.playlists[params[:id].to_i] 
   end
+
 end
 

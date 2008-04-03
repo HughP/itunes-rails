@@ -44,4 +44,9 @@ class QueuedTracksController < ApplicationController
     redirect_to :back
   end
 
+  def toggle_shuffle
+    logger.debug "toggling shuffle mode on for queue"
+    @iTunes.queue.shuffle = @iTunes.queue.shuffle == 0 ? true : false
+    redirect_to :back
+  end
 end
