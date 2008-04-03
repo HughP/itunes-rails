@@ -16,11 +16,16 @@
     </div>
 
     <br/>
-    <%= link_to_remote "skip to next", :url => {:controller => "queued_tracks", :action => "skip_current"} %> 
-    / <%= link_to_remote "pause/play", :url => {:controller => "queued_tracks", :action => "playpause"} %>
-    / <%= link_to_remote "previous track", :url => {:controller => "queued_tracks", :action => "previous_track"} %>
-    <p><%= link_to_remote "refresh queue info", :url => {:controller => "queued_tracks", :action => "reload_queue_box" } %>
-    / <%= link_to_remote "toggle shuffle mode", :url => {:controller => "queued_tracks", :action => "toggle_shuffle" } %>
+    <%= link_to_remote "skip to next", :url => {:controller => "queued_tracks", :action => "skip_current"},
+        :loading => "$('queue-changing').show()", :complete => "$('queue-changing').hide()" %> 
+    / <%= link_to_remote "pause/play", :url => {:controller => "queued_tracks", :action => "playpause"},
+        :loading => "$('queue-changing').show()", :complete => "$('queue-changing').hide()"  %>
+    / <%= link_to_remote "previous track", :url => {:controller => "queued_tracks", :action => "previous_track"},
+        :loading => "$('queue-changing').show()", :complete => "$('queue-changing').hide()"  %>
+    <p><%= link_to_remote "refresh queue info", :url => {:controller => "queued_tracks", :action => "reload_queue_box" },
+        :loading => "$('queue-changing').show()", :complete => "$('queue-changing').hide()"  %>
+    / <%= link_to_remote "toggle shuffle mode", :url => {:controller => "queued_tracks", :action => "toggle_shuffle" },
+        :loading => "$('queue-changing').show()", :complete => "$('queue-changing').hide()"  %>
     <h2>queue
       <% if @iTunes.queue.shuffle == 1 %>
       <small>(in shuffle mode)</small>
@@ -44,8 +49,10 @@
     <td>
       <%= index + 1 %>
       <br/>
-      <%= link_to_remote "[x]", :url => { :controller => "queued_tracks", :action => :destroy, :id => index }  %>
-      <%= link_to_remote "pla", :url => { :controller => "queued_tracks", :action => :play_now, :id => index } %>
+      <%= link_to_remote "[x]", :url => { :controller => "queued_tracks", :action => :destroy, :id => index },
+        :loading => "$('queue-changing').show()", :complete => "$('queue-changing').hide()"   %>
+      <%= link_to_remote "pla", :url => { :controller => "queued_tracks", :action => :play_now, :id => index },
+        :loading => "$('queue-changing').show()", :complete => "$('queue-changing').hide()"  %>
     </td>
     <td><%= track.artist %>
       <br/><%= track.name %> 
