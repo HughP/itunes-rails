@@ -26,9 +26,10 @@ class QueuedTracksController < ApplicationController
   end
 
   def play_now
-    @current_track_index
     index = params[:id].to_i
-    if @state.strip.to_s == "stopped"
+    if @state.strip.to_s != "playing"
+      logger.debug "Trying to start playlist..."
+      @iTunes.stop
       @iTunes.queue.playOnce(1)
     end
     if @current_track_index - 1 < index
