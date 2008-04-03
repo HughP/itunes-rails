@@ -45,7 +45,7 @@ table.queue tr.current  {
 td {
   vertical-align: top;
 }
-col#c0 { width: 7em }
+col#c0 { width: 3em }
 col#c1 { width: 25%}
 col#c2 { width: 40% }
 col#c3 { }
