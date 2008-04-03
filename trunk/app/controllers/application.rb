@@ -12,6 +12,7 @@ class ApplicationController < ActionController::Base
   def find_itunes
     @iTunes ||= ITUNES #OSX::SBApplication.applicationWithBundleIdentifier_("com.apple.iTunes")
     @state = `osascript -e 'tell application "iTunes" to player state as string'`
+    logger.debug "STATE: #{@state}"
 
     # also set the volume if that is a parameter
     if params[:volume]
@@ -27,9 +28,10 @@ class ApplicationController < ActionController::Base
 
     # get current track index, but check for status first?
     # or just use error handling
-    begin
+    if @state.to_s.strip != 'stopped'
       @current_track_index = `osascript -e 'tell application "iTunes" to index of current track as string'`.to_i
-    rescue
+    else
+      logger.debug "Setting current track index to 0"
       @current_track_index = 0
     end
     logger.debug "CURRENT TRACK"
