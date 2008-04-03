@@ -8,6 +8,7 @@ module ApplicationHelper
   end
 
   def album_art_image_tag(track)
+    @iTunes.create_artwork_for_current_track
     path = @iTunes.artwork_file(@iTunes.currentTrack) 
     if path
       image_tag( path, :size => "200x200")
