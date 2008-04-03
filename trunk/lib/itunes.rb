@@ -76,6 +76,7 @@ class ITunes
   def create_artwork_for_current_track
     # check if it exists
     return if artwork_file(@app.currentTrack)
+    return if @app.currentTrack.artworks.empty?
     extension = `osascript -e '
     tell application "iTunes"
       set theTrack to current track
@@ -112,5 +113,13 @@ class ITunes
     return web_path + ".jpg" if File.exist?( filename + ".jpg" )
     return web_path + ".png" if File.exist?( filename + ".png" )
     nil
+  end
+
+  def find_songs_without_art
+    library.tracks.each do |track|
+      if track.artworks.empty?
+        puts track.name
+      end
+    end
   end
 end
