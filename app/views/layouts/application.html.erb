@@ -29,7 +29,6 @@
       <input type="submit" value="set"/>
     </form>
     <p>status: iTunes is <%= @state %>
-    (shuffle mode is <%= @iTunes.queue.shuffle == 1 ? "on" : "off"%>)
     </p>
     <div>
       <% form_tag(url_for({}), :method => :get ) do %>
@@ -45,7 +44,11 @@
     / <%= link_to "previous track", :controller => "queued_tracks", :action => "previous_track"%>
     <p><%= link_to "reload page to update" %>
     / <%= link_to "toggle shuffle mode", :controller => "queued_tracks", :action => "toggle_shuffle" %>
-    <h2>queue</h2>
+    <h2>queue
+      <% if @iTunes.queue.shuffle == 1 %>
+      <small>(in shuffle mode)<small>
+      <% end %>
+    </h2>
     
     <%= render :partial => 'queued_tracks/queued_tracks' %>
 
