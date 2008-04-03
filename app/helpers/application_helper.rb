@@ -13,6 +13,8 @@ module ApplicationHelper
     path = @iTunes.artwork_file(@iTunes.currentTrack) 
     if path
       image_tag( path, :size => "200x200")
+    else
+      "<p>There is no artwork for the current song.</p>"
     end
   end
 end
