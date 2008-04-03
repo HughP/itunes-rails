@@ -4,6 +4,7 @@ class TracksController < ApplicationController
   def queue
     track = @iTunes.find_track(params[:id].to_i)
     track.comment = session[:username] || "" # credit for queuing the song
+    track.enabled = true # just in case
     @iTunes.queue_track(track)
     logger.debug "queuing, ITUNES STATE:"
     logger.debug @state
