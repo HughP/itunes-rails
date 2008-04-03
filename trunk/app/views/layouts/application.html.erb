@@ -50,7 +50,7 @@
       <% end %>
     </h2>
     
-    <%= album_art_image_tag @iTunes.artwork_file(@iTunes.currentTrack) %>
+    <%= album_art_image_tag( @iTunes.artwork_file(@iTunes.currentTrack)) unless @state == "stopped" %>
     <%= render :partial => 'queued_tracks/queued_tracks' %>
 
     <div id="byline">

@@ -12,6 +12,7 @@ class ApplicationController < ActionController::Base
   def find_itunes
     @iTunes ||= ITUNES #OSX::SBApplication.applicationWithBundleIdentifier_("com.apple.iTunes")
     @state = `osascript -e 'tell application "iTunes" to player state as string'`
+    @state.strip!
     logger.debug "STATE: #{@state}"
 
     # also set the volume if that is a parameter
