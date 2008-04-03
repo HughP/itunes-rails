@@ -1,3 +1,9 @@
+<p>click "que" to add to the end of queue. beware that ordering by artist, track, or album is currently slow for very large playlists.
+if a song you add doesn't play, it may not be locatable by iTunes. remove it from the queue to keep the queue playable.</p>
+<form action="<%= url_for() %>" method="get">
+  <input type="text" name="q" value="<%= params[:q]  %>"/>
+  <input type="submit" value="search"/>
+</form>
 <br/>
 <h3 class="playlist-title">playlist:</h3>
 <h1 class="playlist-title"><%= @playlist.name %></h1>

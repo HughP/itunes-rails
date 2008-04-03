@@ -15,6 +15,7 @@ class PlaylistsController < ApplicationController
       @limit = 500
       if order
         @tracks = @playlist.tracks.sort_by {|t| t.send(order)}[@offset,@limit]
+        #@tracks = @playlist.tracks.sortedArrayUsingSelector(order.to_sym)[@offset,@limit]
       else
         @tracks = @playlist.tracks[@offset,@limit]
       end
