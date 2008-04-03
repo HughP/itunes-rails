@@ -12,11 +12,6 @@
     <%=link_to "home", "/" %>
   </div>
   <div id="browser">
-    <p>click "que" to add to the end of queue. beware that ordering by artist, track, or album is currently slow for very large playlists.</p>
-    <form action="<%= url_for() %>" method="get">
-      <input type="text" name="q" value="<%= params[:q]  %>"/>
-      <input type="submit" value="search"/>
-    </form>
     <%= yield %>
   </div>
 
