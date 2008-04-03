@@ -6,4 +6,11 @@ module ApplicationHelper
     old_params = params
     url_for(old_params.merge(new_params))
   end
+
+  def album_art_image_tag(track)
+    path = @iTunes.artwork_file(@iTunes.currentTrack) 
+    if path
+      image_tag( path, :size => "200x200")
+    end
+  end
 end

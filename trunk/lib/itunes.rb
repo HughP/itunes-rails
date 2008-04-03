@@ -74,6 +74,8 @@ class ITunes
   end
 
   def create_artwork_for_current_track
+    # check if it exists
+    return if artwork_file(@app.currentTrack)
     extension = `osascript -e '
     tell application "iTunes"
       set theTrack to current track
@@ -93,13 +95,22 @@ class ITunes
       return extension as string
     end tell' `
 
-    filename = "%s-%s" % [@iTunes.currentTrack.artist , @iTunes.currentTrack.album ]
+    filename = artwork_filename(@app.currentTrack)
+    puts filename
+    
     `tail -c+223 #{RAILS_ROOT}/public/tempfile.* > #{RAILS_ROOT}/public/artwork/#{filename}#{extension.strip} && rm #{RAILS_ROOT}/public/tempfile.*`
   end
 
-  def current_artwork_filename
-    return "currentTrack.jpg" if File.exist?( RAILS_ROOT + "/currentTrack.jpg" )
-    return "currentTrack.png" if File.exist?( RAILS_ROOT + "/currentTrack.png" )
+  def artwork_filename(track)
+    "%s-%s" % [track.artist.to_s.strip.gsub(/[\W\-_]*/,''), track.album.to_s.strip.gsub(/[\W\-_]*/,'')]
+  end
+
+  def artwork_file(track)
+    web_path = "/artwork/" + artwork_filename(track) 
+    filename = RAILS_ROOT + "/public" + web_path
+
+    return web_path + ".jpg" if File.exist?( filename + ".jpg" )
+    return web_path + ".png" if File.exist?( filename + ".png" )
     nil
   end
 end
