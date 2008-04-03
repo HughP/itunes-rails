@@ -19,7 +19,7 @@
     <%= link_to_remote "skip to next", :url => {:controller => "queued_tracks", :action => "skip_current"} %> 
     / <%= link_to_remote "pause/play", :url => {:controller => "queued_tracks", :action => "playpause"} %>
     / <%= link_to_remote "previous track", :url => {:controller => "queued_tracks", :action => "previous_track"} %>
-    <p><%= link_to_remote "refresh itunes info", :url => {:controller => "queued_tracks", :action => "reload_queue_box" } %>
+    <p><%= link_to_remote "refresh queue info", :url => {:controller => "queued_tracks", :action => "reload_queue_box" } %>
     / <%= link_to_remote "toggle shuffle mode", :url => {:controller => "queued_tracks", :action => "toggle_shuffle" } %>
     <h2>queue
       <% if @iTunes.queue.shuffle == 1 %>
