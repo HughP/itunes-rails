@@ -19,8 +19,11 @@ body {
   width: 15%;
 }
 #artist-list ul {
-  list-style-type:square;
+  list-style-type:none;
   padding-left: 0;
+}
+#artist-list li {
+  padding-bottom:0.3em;
 }
 #library-list {
   position: absolute;
