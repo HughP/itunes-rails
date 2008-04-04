@@ -29,6 +29,7 @@ class ITunes
   end
 
   def artists(playlist=library)
+    return {} if playlist.tracks.empty?
     artists = playlist.tracks.arrayByApplyingSelector("artist").select {|x| x.to_s =~ /\w/}
     # count tracks per artist, which is represented to number of occurrences
     artist = Hash.new(0)
