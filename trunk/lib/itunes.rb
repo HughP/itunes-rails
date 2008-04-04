@@ -28,6 +28,16 @@ class ITunes
     playlists.first
   end
 
+  def artists(playlist=library)
+    artists = playlist.tracks.arrayByApplyingSelector("artist").select {|x| x.to_s =~ /\w/}
+    # count tracks per artist, which is represented to number of occurrences
+    artist = Hash.new(0)
+    artists.each do |name|
+      artist[name.to_s] += 1
+    end
+    artist
+  end
+
   # Pass in a string to get matching tracks. Pass in an integer to search by 
   # databaseID
   def find_track(query)

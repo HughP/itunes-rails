@@ -66,7 +66,16 @@ describe ITunes do
   end
 
   it "should save a track's album artwork to a file" do
+    pending "tested"
     @i.create_artwork_for_current_track
   end
+
+  it "should return a list of all the artists in the library" do
+    @i.artists.class.should == Hash
+    @i.artists.each_pair do |k, v|
+      puts "#{k} : #{v}"
+    end
+  end
+
 end
 
