@@ -52,9 +52,14 @@
 <table class="queue">
   <colgroup>
     <col style="width: 2em"/>
-    <col style="width: 70%"/>
+    <col style="width: 50%"/>
     <col />
   </colgroup>
+  <thead>
+    <th></th>
+    <th>track</th>
+    <th>queued by</th>
+  </thead>
   <% @queued_tracks.reverse.each_with_index do |track, i| %>
   <% index = @queued_tracks.size - i - 1  %>
   <tr class="<%= cycle('odd', 'even') %> <%= (index + 1 == @current_track_index) ? 'current' : nil %>">
