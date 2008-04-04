@@ -1,7 +1,75 @@
-itunes-rails is a web server wrapper for your local iTunes application. 
+itunes-rails is a web server wrapper for and interface to your local iTunes
+application. 
 
-More documentation will follow.
+WARNING: iTunesRails overwrite the (hopefully little-used) "comment" field of
+your iTunes tracks to record the last person who queued that track. So if you
+have any comments on tracks you want to preserve, please do not queue those
+tracks on iTunesRails, or don't use iTunesRails.
 
-To use, just start the Rails application and hit the app with a web browser. There is no database. 
+Once the code is checked out from the code repository, type
 
-This project was hatched in Betahouse, Cambridge, MA. It is subject to the MIT license.
+cd itunes-rails
+
+and then
+
+mongrel_rails start
+
+This should start itunes-rails. Open a web browser to the URL
+
+http://localhost:3000 
+
+You should see the itunes-rails web interface.
+
+If the Terminal complains that you need a newer version of Ruby on Rails, type
+
+sudo gem install rails -y
+
+and enter your OS X user account password (assuming you're an administrator on
+this Mac). That should bring you up to date. Then repeat the instructions
+starting above at "mongrel_rails start".
+
+To let other people on your local network access the same interface, make sure
+you turn on Web Sharing in the Sharing System Preferences panel. People should
+be able to hit itunes-rails using your computer's website address as indicated
+by the Sharing Preferences panel, with ":3000" appended to it.
+
+iTunesRails is still evolving. To get the latest features and bugfixes, cd into
+your itunes-rails directory and type
+
+svn up
+
+This should update the code. Then stop the mongrel_rails process (with
+Control-C) if you haven't already and restart it with "mongrel_rails start".
+
+To let other people easily drop in audio files and have them automatically added
+to the iTunes library running behind iTunesRails, you can set up a shared folder
+with the appropriate Automator folder actions. A more detailed guide on this is
+forthcoming.
+
+Feel free to report any problems or feature suggestions via the Issues tab
+above.
+
+Enjoy music, enjoy life.
+
+Release Notes
+
+Version 0.0 (March 25, 2008)
+
+Malcolm Cowell and Dan Choi come up with the idea for this project. Malcolm
+volunteers to turn his spare Mac Mini into a betahouse iTunes music server. Dan
+starts studying the Cocoa Scripting Bridge and gets ready to code the project.
+
+
+Version 0.1 (April 2, 2008)
+
+The maiden release. We have some ideas about future features, e.g. Ajax, but
+suggestions are appreciated.
+
+Version 0.2 (April 3, 2008)
+
+Added album cover art, plus Ajax interaction to minimize unnecessary page
+refreshes.
+
+Version 0.3 (April 3, 2008)
+
+Stability improvements. Added artist list left sidebar for easier navigation.
