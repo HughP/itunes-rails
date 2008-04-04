@@ -71,11 +71,19 @@ describe ITunes do
   end
 
   it "should return a list of all the artists in the library" do
+    pending "tested"
     @i.artists.class.should == Hash
     @i.artists.each_pair do |k, v|
       puts "#{k} : #{v}"
     end
   end
 
+  it "should return an empty hash for artists if no tracks in playlist" do
+    pending "tested"
+    playlist = @i.playlist_by_name("name")
+    @i.artists(playlist).each_pair do |k, v|
+      puts "#{k} : #{v}"
+    end
+  end
 end
 
