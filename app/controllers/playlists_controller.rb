@@ -30,7 +30,9 @@ class PlaylistsController < ApplicationController
     end
   end
 
+  # This is called from the select playlist drop down 
   def index
+    redirect_to source_playlist_path(:source_id => 0,:id => params[:playlist_index])
   end
 
   private

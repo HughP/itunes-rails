@@ -8,7 +8,7 @@
   logged in as: <%= session[:username].blank? ? "anonymous" : session[:username] %><br/>
   status: iTunes is <%= @state %> <br/>
   <% if @state != 'stopped' %>
-    current playlist: <%= @iTunes.currentPlaylist.name %>
+    current playlisting playlist: <%= @iTunes.currentPlaylist.name %>
   <% end %>
   <% if @state == 'stopped' || @iTunes.currentPlaylist.name.strip != ITunes::QUEUE_PLAYLIST %>
     <br/><%= link_to_remote "start playing the queue (#{ITunes::QUEUE_PLAYLIST})", :url => {:controller => "queued_tracks", :action => "start_queue"},

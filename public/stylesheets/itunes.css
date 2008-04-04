@@ -31,6 +31,9 @@ body {
   width: 50%;
 
 }
+#playlist-switcher {
+  float:right;
+}
 #nav {
   position:absolute;
   right: 10px;
