@@ -9,6 +9,12 @@ class PlaylistsController < ApplicationController
     more = nil
     if params[:q] && !params[:q].blank? 
       @tracks = @playlist.searchFor_only(params[:q], nil)
+    elsif artist=params[:artist]
+      # This is too slow:
+      #predicate = OSX::NSPredicate.predicateWithFormat("artist == '#{artist}'")
+      #@tracks = @playlist.tracks.filteredArrayUsingPredicate(predicate)
+      category_code = 'kSrR'.unpack("H*").first.hex # artists field search
+      @tracks = @playlist.searchFor_only(params[:artist], category_code)
     else
       # no search, just list
       @offset = (params[:offset] || 0).to_i

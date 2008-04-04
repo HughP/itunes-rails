@@ -1,9 +1,18 @@
+<div id="artist-list">
+  <h3>artists in this playlist:</h3>
+<% (hash=@iTunes.artists(@playlist)).keys.sort.each  do |key| %>
+  <%= link_to key, url_for(:artist => key) %> <%= hash[key] %><br/>
+<% end %>
+</div>
+
+<div id="library-list">
 <p>click "que" to add to the end of queue. beware that ordering by artist, track, or album is currently slow for very large playlists.
 if a song you add doesn't play, it may not be locatable by iTunes. remove it from the queue to keep the queue playable.</p>
 <form action="<%= url_for() %>" method="get">
   <input type="text" name="q" value="<%= params[:q]  %>"/>
   <input type="submit" value="search"/>
 </form>
+
 <br/>
 <h3 class="playlist-title">playlist:</h3>
 <h1 class="playlist-title"><%= @playlist.name %></h1>
@@ -39,3 +48,4 @@ if a song you add doesn't play, it may not be locatable by iTunes. remove it fro
 </table>
 
 <%= render :partial => 'paginator' %>
+</div>
