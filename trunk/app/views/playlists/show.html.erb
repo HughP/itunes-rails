@@ -20,7 +20,20 @@ if a song you add doesn't play, it may not be locatable by iTunes. remove it fro
 <h1 class="playlist-title"><%= @playlist.name %></h1>
 <%=link_to "up", "/" %> :
 <%=link_to "clear ordering or search" %>
+<% form_tag(source_playlists_path(:source_id => 0), :method => :get, :id => "playlist-switcher") do %>
+  <%= select_tag "playlist_index", @iTunes.playlists.enum_with_index.collect { |p,i| 
+    if p.name == @playlist.name 
+      "<option value='#{i}' selected='selected'>#{p.name}</option>"
+    else
+      "<option value='#{i}' >#{p.name}</option>"
+    end
+  } %>
+  <%= submit_tag "go to playlist" %>
+<% end %>
+
 <%= render :partial => 'paginator' %>
+
+
 <table style="margin-top: 1em">
   <colgroup>
     <col id="c0"/>
