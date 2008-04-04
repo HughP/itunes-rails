@@ -1,8 +1,10 @@
 <div id="artist-list">
   <h3>artists in this playlist:</h3>
+  <ul>
 <% (hash=@iTunes.artists(@playlist)).keys.sort_by {|x| x.downcase}.each  do |key| %>
-  <%= link_to key, url_for(:artist => key) %> <%= hash[key] %><br/>
+  <li><%= link_to key, url_for(:artist => key) %> <%= hash[key] %></li>
 <% end %>
+  </ul>
 </div>
 
 <div id="library-list">

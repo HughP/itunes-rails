@@ -18,6 +18,10 @@ body {
   position: absolute;
   width: 15%;
 }
+#artist-list ul {
+  list-style-type:square;
+  padding-left: 0;
+}
 #library-list {
   position: absolute;
   margin-left: 17%;
