@@ -33,12 +33,15 @@ class QueuedTracksController < ApplicationController
   end
 
   def playpause
-    logger.debug("MARK A")
-    @iTunes.playpause()
-    logger.debug("MARK A")
+    if @state == "stopped"
+      @iTunes.queue.playOnce(1)
+    else
+      logger.debug("pausing")
+      @iTunes.playpause()
+    end
+
     respond_to do |format|
       format.js do
-        logger.debug("MARK B")
         reload_state_data 
         render( :update ) { | page | page.replace("queue-box", :partial => "queued_tracks") } 
       end
