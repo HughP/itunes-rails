@@ -19,6 +19,8 @@
     <%= yield %>
   </div>
 
+  <%# This is to keep the information in the queue section fresh %>
+  <%= periodically_call_remote :url => {:controller => "queued_tracks", :action => "reload_queue_box" }, :frequency  => 10  %>
   <div id="queue">
     <%= render :partial => 'queued_tracks/queued_tracks' %>
     <div id="byline">
