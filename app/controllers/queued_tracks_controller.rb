@@ -23,6 +23,17 @@ class QueuedTracksController < ApplicationController
     end
   end
 
+  def change_volume
+    # also set the volume if that is a parameter
+    if params[:volume]
+      volume = params[:volume].to_i
+      if (0..100).include? volume
+        @iTunes.soundVolume = volume 
+      end
+    end
+    redirect_to :back 
+  end
+
   def start_queue
     @iTunes.stop
     @iTunes.queue.playOnce(1)
