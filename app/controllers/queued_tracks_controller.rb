@@ -42,6 +42,7 @@ class QueuedTracksController < ApplicationController
 
     # This deals with a bug(?) in AppleScript or the Scripting Bridge.
     if @state == "playing" && @iTunes.currentPlaylist.name.strip != ITunes::QUEUE_PLAYLIST
+      logger.debug "restarting queue"
       @iTunes.queue.playOnce(1)
     end
     respond_to do |format|
@@ -86,12 +87,16 @@ class QueuedTracksController < ApplicationController
     if @state.strip.to_s != "playing"
       logger.debug "Trying to start playlist..."
     end
-    @iTunes.stop
-    @iTunes.queue.playOnce(1)
-    index.times do 
-      @iTunes.nextTrack
+    # user is just changing volume, skip this
+    # TODO refactor this to be more straightforward
+    unless params[:volume]
+      @iTunes.stop
+      @iTunes.queue.playOnce(1)
+      index.times do 
+        @iTunes.nextTrack
+      end
+      @iTunes.create_artwork_for_current_track
     end
-    @iTunes.create_artwork_for_current_track
     respond_to do |format|
       format.html { redirect_to :back }
       format.js { reload_state_data && render( :update ) { | page | page.replace("queue-box", :partial => "queued_tracks") } } 
