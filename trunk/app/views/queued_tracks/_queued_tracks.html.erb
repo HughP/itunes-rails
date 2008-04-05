@@ -16,7 +16,7 @@
   <% end %>
   </p>
   <div>
-    <% form_remote_tag(:url => url_for({}), :method => :get ) do %>
+    <% form_remote_tag(:url => url_for({:controller => "queued_tracks", :action => :change_volume}), :method => :get ) do %>
     volume: 
       <%= text_field_tag "volume", @iTunes.soundVolume, {:size => 3} %>
       <%= submit_tag "change volume" %>

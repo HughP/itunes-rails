@@ -22,13 +22,6 @@ class ApplicationController < ActionController::Base
     @state.strip!
     logger.debug "STATE: #{@state}"
 
-    # also set the volume if that is a parameter
-    if params[:volume]
-      volume = params[:volume].to_i
-      if (0..100).include? volume
-        @iTunes.soundVolume = volume 
-      end
-    end
   end
 
   def get_queue_data
