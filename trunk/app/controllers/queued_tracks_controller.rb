@@ -103,6 +103,13 @@ class QueuedTracksController < ApplicationController
     unless params[:volume]
       @iTunes.stop
       @iTunes.queue.playOnce(1)
+      # There is no way in the Scripting Bridge API to starting playing a track directly as part
+      # of the track (rather than as the track itself, in which case, the playing stops after the 
+      # track finishes).
+      #
+      # I tried a different way of doing this (see an earlier version of this
+      # code), but there were issues with it.  I'll try to make this more
+      # elegant later. But now I'm opting for slow but less buggy.
       index.times do 
         @iTunes.nextTrack
       end
