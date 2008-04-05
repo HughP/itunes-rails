@@ -40,7 +40,13 @@
     <% end %>
   </h2>
     
-    <%= album_art_image_tag( @iTunes.artwork_file(@iTunes.currentTrack)) unless @state == "stopped" %>
+  <%= album_art_image_tag( @iTunes.artwork_file(@iTunes.currentTrack)) unless @state == "stopped" %>
+  <% if @state == "playing" %>
+  <h4><%= @iTunes.currentTrack.name %>
+  / <%= @iTunes.currentTrack.artist %>
+  / <%= @iTunes.currentTrack.album %></h4>
+  <% end %>
+
   <% if @current_track_index == 0 %>
     <p>The playlist is finished playing</p>
   <% end %>
