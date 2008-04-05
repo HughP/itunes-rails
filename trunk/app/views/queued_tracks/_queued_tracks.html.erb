@@ -34,19 +34,22 @@
       :loading => "$('queue-changing').show()", :complete => "$('queue-changing').hide()"  %>
   / <%= link_to_remote "toggle shuffle mode", :url => {:controller => "queued_tracks", :action => "toggle_shuffle" },
       :loading => "$('queue-changing').show()", :complete => "$('queue-changing').hide()"  %>
+
+  <% if @state == "playing" %>
+  <h2>currently playing</h2>
+  <%= album_art_image_tag( @iTunes.artwork_file(@iTunes.currentTrack)) unless @state == "stopped" %>
+  <p><%= @iTunes.currentTrack.name %>
+  / <%= @iTunes.currentTrack.artist %>
+  / <%= @iTunes.currentTrack.album %></p>
+  <% end %>
+
+
   <h2>queue
     <% if @iTunes.queue.shuffle == 1 %>
     <small>(in shuffle mode)</small>
     <% end %>
   </h2>
     
-  <%= album_art_image_tag( @iTunes.artwork_file(@iTunes.currentTrack)) unless @state == "stopped" %>
-  <% if @state == "playing" %>
-  <h4><%= @iTunes.currentTrack.name %>
-  / <%= @iTunes.currentTrack.artist %>
-  / <%= @iTunes.currentTrack.album %></h4>
-  <% end %>
-
   <% if @current_track_index == 0 %>
     <p>The playlist is finished playing</p>
   <% end %>
