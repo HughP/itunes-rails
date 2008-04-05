@@ -51,25 +51,3 @@ above.
 
 Enjoy music, enjoy life.
 
-Release Notes
-
-Version 0.0 (March 25, 2008)
-
-Malcolm Cowell and Dan Choi come up with the idea for this project. Malcolm
-volunteers to turn his spare Mac Mini into a betahouse iTunes music server. Dan
-starts studying the Cocoa Scripting Bridge and gets ready to code the project.
-
-
-Version 0.1 (April 2, 2008)
-
-The maiden release. We have some ideas about future features, e.g. Ajax, but
-suggestions are appreciated.
-
-Version 0.2 (April 3, 2008)
-
-Added album cover art, plus Ajax interaction to minimize unnecessary page
-refreshes.
-
-Version 0.3 (April 3, 2008)
-
-Stability improvements. Added artist list left sidebar for easier navigation.
