@@ -9,17 +9,9 @@
 
 <div id="library-list">
 <p>click "que" to add to the end of queue. beware that ordering by artist, track, or album is currently slow for very large playlists.
-if a song you add doesn't play, it may not be locatable by iTunes. remove it from the queue to keep the queue playable.</p>
-<form action="<%= url_for() %>" method="get">
-  <input type="text" name="q" value="<%= params[:q]  %>"/>
-  <input type="submit" value="search"/>
-</form>
+if a song you try to queue doesn't appear in the queue, it may not be locatable by iTunes (e.g. on a hard drive that isn't connected to your computer.)</p>
 
-<br/>
-<h3 class="playlist-title">playlist:</h3>
-<h1 class="playlist-title"><%= @playlist.name %></h1>
-<%=link_to "up", "/" %> :
-<%=link_to "clear ordering or search" %>
+<div id="playlist-nav-controls">
 <% form_tag(source_playlists_path(:source_id => 0), :method => :get, :id => "playlist-switcher") do %>
   <%= select_tag "playlist_index", @iTunes.playlists.enum_with_index.collect { |p,i| 
     if p.name == @playlist.name 
@@ -30,6 +22,17 @@ if a song you add doesn't play, it may not be locatable by iTunes. remove it fro
   } %>
   <%= submit_tag "go to playlist" %>
 <% end %>
+<form action="<%= url_for() %>" method="get">
+  <input type="text" name="q" value="<%= params[:q]  %>"/>
+  <input type="submit" value="search"/>
+</form>
+</div>
+
+<br/>
+<h3 class="playlist-title">playlist:</h3>
+<h1 class="playlist-title"><%= @playlist.name %></h1>
+<%=link_to "up", "/" %> :
+<%=link_to "clear ordering or search" %>
 
 <%= render :partial => 'paginator' %>
 
