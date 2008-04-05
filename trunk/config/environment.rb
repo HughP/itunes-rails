@@ -62,5 +62,5 @@ require 'osx/cocoa'
 OSX.require_framework 'ScriptingBridge'
 require 'lib/itunes.rb' 
 ITUNES = ITunes.new
-ITUNES_RAILS_VERSION = '0.4'
+ITUNES_RAILS_VERSION = '0.5'
 
