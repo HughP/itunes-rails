@@ -36,15 +36,23 @@ if a song you try to queue doesn't appear in the queue, it may not be locatable 
 
 <%= render :partial => 'paginator' %>
 
-
+<% if params[:artist] %>
+  <h3>All Tracks in this Playlist by <%= params[:artist] %></h3>
+<% end %>
+<% form_tag url_for(:controller => "tracks", :action => "queue", :id => "multiple"), :method => :put do  %>
+  <%= button_to_function "select all tracks", "jQuery('.track-checkbox').attr('checked', true);"  %>
+  <%= submit_tag "queue all selected" %>
+  <%= button_to_function "clear selections", "jQuery('.track-checkbox').attr('checked', false);"  %>
 <table style="margin-top: 1em">
   <colgroup>
     <col id="c0"/>
+    <col id="c0b"/>
     <col id="c1"/>
     <col id="c2"/>
     <col id="c3"/>
   </colgroup>
   <thead style="text-align:left">
+    <th></th>
     <th></th>
     <th><%= link_to_unless params[:order] == "artist" || params.has_key?(:q), "artist", :order => "artist" %></th>
     <th><%= link_to_unless params[:order] == "name" || params.has_key?(:q), "track", :order => "name", :q => params[:q] %></th>
@@ -53,8 +61,11 @@ if a song you try to queue doesn't appear in the queue, it may not be locatable 
 <% @tracks.each do |track| %>
   <tr class="<%= cycle('odd', 'even') %>">
     <td>
+      <%= check_box_tag "tracks[]", track.databaseID, nil, {:class => "track-checkbox"} %>
+    </td>
+    <td>
       <%= link_to_remote 'que', :url => queue_track_path(:id => track.databaseID, :q => params[:q], :order => params[:order]), :method => :put,
-        :loading => "$('progress').show()", :complete => "$('progress').hide()" %> :
+        :loading => "$('progress').show()", :complete => "$('progress').hide()" %>
     </td>
     <td><%= track.artist %></td>
     <td>
@@ -64,6 +75,7 @@ if a song you try to queue doesn't appear in the queue, it may not be locatable 
   </tr>
 <% end %>
 </table>
+<% end %> <!-- end of form -->
 
 <%= render :partial => 'paginator' %>
 </div>

@@ -29,7 +29,6 @@ body {
   position: absolute;
   margin-left: 17%;
   width: 50%;
-
 }
 #playlist-nav-controls { position:relative; }
 #playlist-switcher {
@@ -48,9 +47,7 @@ body {
   width: 25%;
   float: left;
   padding: 1em;
-
 }
-
 .pagination {
   margin: 5px 0; 
 }
@@ -63,10 +60,11 @@ table.queue tr.current  {
   background-color: #FFE5A8;
 }
 thead { text-align: left }
-td {
+table.queue td {
   vertical-align: top;
 }
-col#c0 { width: 3em }
+col#c0 { width: 2em }
+col#c0b { width: 2em }
 col#c1 { width: 25%}
 col#c2 { width: 40% }
 col#c3 { }

@@ -2,12 +2,22 @@ class TracksController < ApplicationController
 
   before_filter :find_track
   def queue
-    track = @iTunes.find_track(params[:id].to_i)
-    track.comment = session[:username] || "" # credit for queuing the song
-    track.enabled = true # just in case
-    @iTunes.queue_track(track)
-    logger.debug "queuing, ITUNES STATE:"
-    logger.debug @state
+    # queuing multiple tracks
+    if params[:tracks]
+      track_ids = params[:tracks].map {|track_id| track_id.to_i}
+      logger.debug "queuing multiple tracks"
+    else 
+      track_ids = [params[:id].to_i]
+    end
+
+    track_ids.each do |track_id|
+      track = @iTunes.find_track(track_id)
+      track.comment = session[:username] || "" # credit for queuing the song
+      track.enabled = true # just in case
+      @iTunes.queue_track(track)
+      logger.debug "queuing"
+      logger.debug @state
+    end
 
     if @state.strip.to_s == "stopped" 
       logger.debug "TRYING TO PLAY"
