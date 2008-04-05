@@ -40,6 +40,10 @@ class QueuedTracksController < ApplicationController
       @iTunes.playpause()
     end
 
+    # This deals with a bug(?) in AppleScript or the Scripting Bridge.
+    if @state == "playing" && @iTunes.currentPlaylist.name.strip != ITunes::QUEUE_PLAYLIST
+      @iTunes.queue.playOnce(1)
+    end
     respond_to do |format|
       format.js do
         reload_state_data 
