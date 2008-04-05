@@ -14,9 +14,14 @@ body {
   display:inline
 }
 #artist-list {
-  margin-top: 1em;
   position: absolute;
   width: 15%;
+}
+#library-list p {
+  margin-top:0;
+}
+#artist-list h3 {
+  margin-top:0;
 }
 #artist-list ul {
   list-style-type:none;
