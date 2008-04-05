@@ -32,8 +32,6 @@
       :loading => "$('queue-changing').show()", :complete => "$('queue-changing').hide()"  %>
   <p><%= link_to_remote "refresh queue info", :url => {:controller => "queued_tracks", :action => "reload_queue_box" },
       :loading => "$('queue-changing').show()", :complete => "$('queue-changing').hide()"  %>
-      <%= periodically_call_remote :url => {:controller => "queued_tracks", :action => "reload_queue_box" },
-      :frequency  => 10  %>
   / <%= link_to_remote "toggle shuffle mode", :url => {:controller => "queued_tracks", :action => "toggle_shuffle" },
       :loading => "$('queue-changing').show()", :complete => "$('queue-changing').hide()"  %>
 
