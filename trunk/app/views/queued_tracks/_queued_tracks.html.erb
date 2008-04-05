@@ -51,7 +51,7 @@
 
 <table class="queue">
   <colgroup>
-    <col style="width: 2em"/>
+    <col style="width: 3em"/>
     <col style="width: 50%"/>
     <col />
   </colgroup>
@@ -64,11 +64,16 @@
   <% index = @queued_tracks.size - i - 1  %>
   <tr class="<%= cycle('odd', 'even') %> <%= (index + 1 == @current_track_index) ? 'current' : nil %>">
     <td>
+      <small>
       <%= index + 1 %>
-      <br/>
       <%= link_to_remote "[x]", :url => { :controller => "queued_tracks", :action => :destroy, :id => index },
         :loading => "$('queue-changing').show()", :complete => "$('queue-changing').hide()"   %>
+      </small>
+      <br/>
       <%= link_to_remote "pla", :url => { :controller => "queued_tracks", :action => :play_now, :id => index },
+        :loading => "$('queue-changing').show()", :complete => "$('queue-changing').hide()"  %>
+      <%= link_to_remote "reQ", :url => { :controller => "tracks", :action => :queue, :id => track.databaseID },
+        :method => :put,
         :loading => "$('queue-changing').show()", :complete => "$('queue-changing').hide()"  %>
     </td>
     <td><%= track.artist %>
