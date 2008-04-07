@@ -51,6 +51,14 @@ class ITunes
     end
   end
 
+  def add_tracks_to_playlist(tracks, playlist)
+    if playlist.is_a?(String)
+      playlist = playlist_by_name(playlist)
+    end
+    # TODO use the array methods
+    #track = track.duplicateTo(playlist)
+  end
+
   def add_track_to_playlist(track, playlist)
     if playlist.is_a?(String)
       playlist = playlist_by_name(playlist)
