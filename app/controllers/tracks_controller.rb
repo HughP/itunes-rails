@@ -37,12 +37,23 @@ class TracksController < ApplicationController
     end
   end
 
+  # To get around tricky problems, just allow reordering of stuff ahead of the
+  # @current_track_index
   def reorder
-    @iTunes.clear_queue
+    # delete tracks in front of current_track
+    indices = OSX::NSIndexSet.indexSetWithIndexesInRange( OSX::NSRange.new(@current_track_index, @iTunes.queue.tracks.length - @current_track_index) )
+    @iTunes.queue.tracks.removeObjectsAtIndexes(indices)
     track_ids = params[:queued_tracks].map {|track_id| track_id.to_i}.reverse
     tracks = track_ids.collect{ |id| @iTunes.find_track(id) }
+    @iTunes.queue_tracks(tracks, nil)
     logger.debug "reordering tracks"
-    @iTunes.queue_tracks(tracks)
+
+#   doesn't work:
+#    @iTunes.queue.tracks.each_with_index do |track,index|
+#      next if index == @current_track_index
+#      @iTunes.queue.tracks.replaceObjectAtIndex_withObject(index, tracks[index]) 
+#    end
+
     respond_to do |format|
       format.js { 
         reload_state_data 

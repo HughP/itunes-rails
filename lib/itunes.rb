@@ -88,6 +88,8 @@ class ITunes
   end
 
   def remove_track_from_playlist(track, playlist)
+    # looks dangerous!
+    return
     track.delete
   end
 
