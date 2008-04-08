@@ -85,5 +85,39 @@ describe ITunes do
       puts "#{k} : #{v}"
     end
   end
+
+  it "should batch add tracks to the queue efficiently" do
+    pending "tested"
+    @i.clear_queue
+    tracks = @i.playlist_by_name("Purchased").tracks
+    tracks.each do |t|
+      puts t
+      puts t.get.class
+      puts t.respond_to?("duplicateTo")
+      #@i.add_track_to_playlist(t, "itunes-rails")
+    end
+    @i.add_tracks_to_playlist(tracks, "itunes-rails")
+  end
+
+  it "should batch add tracks to the queue using a Ruby array of tracks" do
+    pending "tested"
+    @i.clear_queue
+    tracks = @i.playlist_by_name("Purchased").tracks.to_a # produce a Ruby array
+    tracks.class.should == Array
+    @i.add_tracks_to_playlist(tracks, "itunes-rails")
+  end
+
+  it "should credit batch add" do
+    pending "tested"
+    @i.clear_queue
+    tracks = @i.playlist_by_name("Purchased").tracks.to_a[0,3] # produce a Ruby array
+    @i.add_tracks_to_playlist(tracks, "itunes-rails", "matz")
+  end
+
+  it "should reorder the items in the queue" do
+    # can just clear the array and rebuild it using passed in tracks params, as
+    # if adding
+  end
 end
+
 

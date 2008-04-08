@@ -71,6 +71,22 @@ class ITunes
     #    puts @app.add_to_(arg1, playlist)
   end
 
+  def add_tracks_to_playlist(tracks, playlist, credit=nil)
+    if playlist.is_a?(String)
+      playlist = playlist_by_name(playlist)
+    end
+    if tracks.is_a?(Array) # need to convert Ruby array into NSArray
+      tracks = OSX::NSArray.arrayWithArray(tracks)
+    end
+    tracks.makeObjectsPerformSelector_withObject("setEnabled:", 1)
+    if credit
+      tracks.makeObjectsPerformSelector_withObject("setComment:", credit)
+    end
+    # Note the colon in the selector string
+    tracks.makeObjectsPerformSelector_withObject("duplicateTo:", playlist)
+    # enable all tracks - does not work
+  end
+
   def remove_track_from_playlist(track, playlist)
     track.delete
   end
@@ -90,6 +106,14 @@ class ITunes
 
   def queue_track(track)
     add_track_to_playlist(track, queue)
+  end
+
+  def queue_tracks(tracks,credit=nil)
+    add_tracks_to_playlist(tracks, queue, credit)
+  end
+
+  def clear_queue
+    queue.tracks.removeAllObjects
   end
 
   def create_artwork_for_current_track
