@@ -8,8 +8,15 @@
 </div>
 
 <div id="library-list">
-<p>click "que" to add to the end of queue. beware that ordering by artist, track, or album is currently slow for very large playlists.
-if a song you try to queue doesn't appear in the queue, it may not be locatable by iTunes (e.g. on a hard drive that isn't connected to your computer.)</p>
+  <p>
+  <%= link_to_function "instructions", "jQuery('#instructions').toggle()"  %>
+  </p>
+  <div id="instructions" style="display:none;padding: 0.5em">
+    <p>Click "que" to add to the end of queue. Beware that ordering by artist, track, or album is currently slow for very large playlists.
+    If a song you try to queue doesn't appear in the queue, it may not be locatable by iTunes (e.g. on a hard drive that isn't connected to your computer.)</p>
+
+    <p>iTunesRails creates an "itunes-rails" playlist to hold the tracks that you queue. For best results, try making sure this playlist is displayed in your actual iTunes application. The "pause/play" and "clear upcoming tracks" actions don't work as expected if the itunes-rails playlist isn't displayed in the actual iTunes application. The developer is trying to come up with a fix for this.</p>
+  </div>
 
 <div id="playlist-nav-controls">
 <% form_tag(source_playlists_path(:source_id => 0), :method => :get, :id => "playlist-switcher") do %>

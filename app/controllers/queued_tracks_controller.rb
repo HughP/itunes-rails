@@ -22,6 +22,17 @@ class QueuedTracksController < ApplicationController
       format.js { reload_state_data && render( :update ) { | page | page.replace("queue-box", :partial => "queued_tracks") } } 
     end
   end
+  
+  # Clears upcoming songs
+  def clear_upcoming
+    # delete tracks in front of current_track
+    indices = OSX::NSIndexSet.indexSetWithIndexesInRange( OSX::NSRange.new(@current_track_index, @iTunes.queue.tracks.length - @current_track_index) )
+    @iTunes.queue.tracks.removeObjectsAtIndexes(indices)
+    respond_to do |format|
+      format.html { redirect_to :back }
+      format.js { reload_state_data && render( :update ) { | page | page.replace("queue-box", :partial => "queued_tracks") } } 
+    end
+  end
 
   def change_volume
     # also set the volume if that is a parameter
