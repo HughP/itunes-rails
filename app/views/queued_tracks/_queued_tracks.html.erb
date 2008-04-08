@@ -43,7 +43,6 @@
   / <%= @iTunes.currentTrack.album %></p>
   <% end %>
 
-
   <h2>queue
     <% if @iTunes.queue.shuffle == 1 %>
     <small>(in shuffle mode)</small>
@@ -69,9 +68,10 @@
     <th>track</th>
     <th>queued by</th>
   </thead>
+  <tbody id="queued_tracks">
   <% @queued_tracks.reverse.each_with_index do |track, i| %>
   <% index = @queued_tracks.size - i - 1  %>
-  <tr class="<%= cycle('odd', 'even') %> <%= (index + 1 == @current_track_index) ? 'current' : nil %>">
+  <tr style="cursor:move" id="track_<%= track.databaseID %>" class="<%= cycle('odd', 'even') %> <%= (index + 1 == @current_track_index) ? 'current' : nil %>">
     <td>
       <small>
       <%= index + 1 %>
@@ -93,6 +93,11 @@
       <%= track.comment %>
     </td>
   </tr>
-<% end %>
+  <% end %>
+  </tbody>
 </table>
+<%= sortable_element("queued_tracks", 
+                     :tag => "tr",
+                     :url => url_for(:controller => "tracks", :action => "reorder"),
+                    :loading => "$('queue-changing').show()", :complete => "$('queue-changing').hide()"  ) %>
 </div>
