@@ -53,8 +53,12 @@
     <p>The playlist is finished playing</p>
   <% end %>
   <% if @queued_tracks.size > 0 %>
-    <p><%= link_to_remote "clear the queue", :url => {:controller => "queued_tracks", :action => "clear" },
-          :loading => "$('queue-changing').show()", :complete => "$('queue-changing').hide()" %></p>
+    <p>
+    <%= link_to_remote "clear the queue", :url => {:controller => "queued_tracks", :action => "clear" },
+      :loading => "$('queue-changing').show()", :complete => "$('queue-changing').hide()" %>
+    / <%= link_to_remote "clear upcoming tracks", :url => {:controller => "queued_tracks", :action => "clear_upcoming" },
+      :loading => "$('queue-changing').show()", :complete => "$('queue-changing').hide()" %>
+      </p>
   <% end %>
 
 <table class="queue">
