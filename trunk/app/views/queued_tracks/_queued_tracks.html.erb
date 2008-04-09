@@ -58,6 +58,8 @@
       :loading => "$('queue-changing').show()", :complete => "$('queue-changing').hide()" %>
     / <%= link_to_remote "clear upcoming tracks", :url => {:controller => "queued_tracks", :action => "clear_upcoming" },
       :loading => "$('queue-changing').show()", :complete => "$('queue-changing').hide()" %>
+    / <%= link_to_remote "clear played tracks", :url => {:controller => "queued_tracks", :action => "clear_played" },
+      :loading => "$('queue-changing').show()", :complete => "$('queue-changing').hide()" %>
       </p>
   <% end %>
 

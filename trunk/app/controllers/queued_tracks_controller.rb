@@ -34,6 +34,18 @@ class QueuedTracksController < ApplicationController
       format.js { reload_state_data && render( :update ) { | page | page.replace("queue-box", :partial => "queued_tracks") } } 
     end
   end
+  
+  # Clears upcoming songs
+  def clear_played
+    # delete tracks behind current_track
+    indices = OSX::NSIndexSet.indexSetWithIndexesInRange( OSX::NSRange.new(0, @current_track_index - 1) )
+    @iTunes.queue.tracks.removeObjectsAtIndexes(indices)
+    respond_to do |format|
+      format.html { redirect_to :back }
+      format.js { reload_state_data && render( :update ) { | page | page.replace("queue-box", :partial => "queued_tracks") } } 
+    end
+  end
+
 
   def change_volume
     # also set the volume if that is a parameter
@@ -116,6 +128,7 @@ class QueuedTracksController < ApplicationController
     if @state.strip.to_s == "stopped"
       logger.debug "Trying to start playlist..."
       @iTunes.queue.playOnce(1)
+      @current_track_index = 1
     elsif @state.strip.to_s == "paused"
       @iTunes.playpause
     end
@@ -140,6 +153,7 @@ class QueuedTracksController < ApplicationController
           @iTunes.previousTrack
         end
       elsif @current_track_index != index
+        logger.debug "skipping forward from the beginning of the playlist"
         @iTunes.stop
         @iTunes.queue.playOnce(1)
         (index - 1).times do 
