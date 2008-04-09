@@ -146,7 +146,11 @@ class ITunes
   end
 
   def artwork_filename(track)
-    "%s-%s" % [track.artist.to_s.strip.gsub(/[\W\-_]*/,''), track.album.to_s.strip.gsub(/[\W\-_]*/,'')]
+    # Keep the filenames short, esp. in the case of classical music artist and
+    # album data, which are often way too long
+    artist = track.artist.to_s.strip.gsub(/[\W\-_]*/,'')[0,15]
+    album = track.album.to_s.strip.gsub(/[\W\-_]*/,'')[0,15]
+    "%s-%s" % [artist, album]
   end
 
   def artwork_file(track)
