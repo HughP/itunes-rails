@@ -116,6 +116,8 @@ class QueuedTracksController < ApplicationController
     if @state.strip.to_s == "stopped"
       logger.debug "Trying to start playlist..."
       @iTunes.queue.playOnce(1)
+    elsif @state.strip.to_s == "paused"
+      @iTunes.playpause
     end
     # user is just changing volume, skip this
     # TODO refactor this to be more straightforward
