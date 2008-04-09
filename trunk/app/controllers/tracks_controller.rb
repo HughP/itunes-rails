@@ -2,7 +2,6 @@ class TracksController < ApplicationController
 
   before_filter :find_track
   def queue
-    start_playing_at_index = @queued_tracks.size  # might use this later
     # queuing multiple tracks
     if params[:tracks]
       track_ids = params[:tracks].map {|track_id| track_id.to_i}
@@ -17,14 +16,6 @@ class TracksController < ApplicationController
       track.comment = session[:username] || "" # credit for queuing the song
       logger.debug "queuing a track"
       @iTunes.queue_track(track)
-    end
-    if @state.strip.to_s == "stopped" 
-      logger.debug "TRYING TO PLAY"
-      @iTunes.queue.playOnce(1)
-      # but need to skip to the head of the queue, unless multiple track add
-      start_playing_at_index.times do 
-        @iTunes.nextTrack
-      end
     end
     respond_to do |format|
       format.html { redirect_to :back }

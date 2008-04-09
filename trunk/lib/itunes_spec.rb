@@ -118,6 +118,16 @@ describe ITunes do
     # can just clear the array and rebuild it using passed in tracks params, as
     # if adding
   end
+
+  it "should set the queue playlist as the front window" do 
+    puts @i.browserWindows.first.view.name
+    # call this method:
+    @i.select_queue_playlist
+    @i.browserWindows.first.view.name.should == ITunes::QUEUE_PLAYLIST
+
+    # @i.queue.duplicateTo(@i.playlistWindows)
+
+  end
 end
 
 

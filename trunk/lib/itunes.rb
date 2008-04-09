@@ -51,14 +51,6 @@ class ITunes
     end
   end
 
-  def add_tracks_to_playlist(tracks, playlist)
-    if playlist.is_a?(String)
-      playlist = playlist_by_name(playlist)
-    end
-    # TODO use the array methods
-    #track = track.duplicateTo(playlist)
-  end
-
   def add_track_to_playlist(track, playlist)
     if playlist.is_a?(String)
       playlist = playlist_by_name(playlist)
@@ -99,6 +91,12 @@ class ITunes
     playlist = @app.classForScriptingClass("playlist").alloc.initWithProperties(props)
     playlists.insertObject_atIndex(playlist, 0)
     playlist
+  end
+
+  # makes sure the queue playlist is selected. importance for pause/play, skip,
+  # etc.
+  def select_queue_playlist
+    browserWindows.first.view = queue
   end
 
   # This is the playlist that itunes-rails uses
