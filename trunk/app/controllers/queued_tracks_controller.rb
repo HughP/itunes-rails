@@ -110,15 +110,15 @@ class QueuedTracksController < ApplicationController
   end
 
   def play_now
-    index = params[:id].to_i
+    index = params[:id].to_i + 1
+    logger.debug "index: #{index}"
+    logger.debug "current_track: #{@current_track_index}"
     if @state.strip.to_s != "playing"
       logger.debug "Trying to start playlist..."
     end
     # user is just changing volume, skip this
     # TODO refactor this to be more straightforward
     unless params[:volume]
-      @iTunes.stop
-      @iTunes.queue.playOnce(1)
       # There is no way in the Scripting Bridge API to starting playing a track directly as part
       # of the track (rather than as the track itself, in which case, the playing stops after the 
       # track finishes).
@@ -126,8 +126,22 @@ class QueuedTracksController < ApplicationController
       # I tried a different way of doing this (see an earlier version of this
       # code), but there were issues with it.  I'll try to make this more
       # elegant later. But now I'm opting for slow but less buggy.
-      index.times do 
-        @iTunes.nextTrack
+      if index > @current_track_index
+        (index - @current_track_index).times do
+          @iTunes.nextTrack
+        end
+      elsif ((@current_track_index - 1) / 2) < index 
+        # rewind by steps
+        logger.debug("rewinding")
+        (@current_track_index - index).times do
+          @iTunes.previousTrack
+        end
+      elsif @current_track_index != index
+        @iTunes.stop
+        @iTunes.queue.playOnce(1)
+        (index - 1).times do 
+          @iTunes.nextTrack
+        end
       end
       @iTunes.create_artwork_for_current_track
     end
