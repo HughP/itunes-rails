@@ -19,7 +19,7 @@
     <% form_remote_tag(:url => url_for({:controller => "queued_tracks", :action => :change_volume}), :method => :get ) do %>
     volume: 
       <%= text_field_tag "volume", @iTunes.soundVolume, {:size => 3} %>
-      <%= submit_tag "change volume" %>
+      <%= submit_tag "change" %>
     <% end %>
   </div>
 
@@ -35,12 +35,12 @@
   / <%= link_to_remote "toggle shuffle mode", :url => {:controller => "queued_tracks", :action => "toggle_shuffle" },
       :loading => "$('queue-changing').show()", :complete => "$('queue-changing').hide()"  %>
 
-  <% if @state == "playing" %>
+  <% if @state != "stopped" %>
   <h2>currently playing</h2>
-  <%= album_art_image_tag( @iTunes.artwork_file(@iTunes.currentTrack)) unless @state == "stopped" %>
-  <p><%= @iTunes.currentTrack.name %>
-  / <%= @iTunes.currentTrack.artist %>
-  / <%= @iTunes.currentTrack.album %></p>
+  <%= album_art_image_tag unless @state == "stopped" %>
+  <p><%= @current_track.name %>
+  / <%= @current_track.artist %>
+  / <%= @current_track.album %></p>
   <% end %>
 
   <h2>queue
