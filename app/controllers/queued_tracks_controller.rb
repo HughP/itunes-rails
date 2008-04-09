@@ -1,5 +1,6 @@
 class QueuedTracksController < ApplicationController
   skip_before_filter :find_itunes, :get_queue_data, :only => :test_ajax
+  before_filter :select_queue_playlist, :except => :reload_queue_box
 
   def index
   end
@@ -77,6 +78,8 @@ class QueuedTracksController < ApplicationController
   end
 
   def skip_current
+    # Needs to be in play mode for nextTrack()
+    @iTunes.playpause if @state == "paused"
     @iTunes.nextTrack
     respond_to do |format|
       format.html { redirect_to :back }
@@ -97,6 +100,8 @@ class QueuedTracksController < ApplicationController
   end
 
   def previous_track
+    # Needs to be in play mode for nextTrack()
+    @iTunes.playpause if @state == "paused"
     @iTunes.previousTrack
     respond_to do |format|
       format.html { redirect_to :back }

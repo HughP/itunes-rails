@@ -21,7 +21,10 @@ class ApplicationController < ActionController::Base
     @state = `osascript -e 'tell application "iTunes" to player state as string'`
     @state.strip!
     logger.debug "STATE: #{@state}"
+  end
 
+  def select_queue_playlist
+    @iTunes.select_queue_playlist
   end
 
   def get_queue_data
