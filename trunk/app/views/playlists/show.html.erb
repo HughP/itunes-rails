@@ -46,7 +46,7 @@
 <% if params[:artist] %>
   <h3>All Tracks in this Playlist by <%= params[:artist] %></h3>
 <% end %>
-<% form_tag url_for(:controller => "tracks", :action => "queue", :id => "multiple"), :method => :put do  %>
+<% form_remote_tag(:url => url_for(:controller => "tracks", :action => "queue", :id => "multiple"), :method => :put, :loading => "$('queue-changing').show()", :complete => "$('queue-changing').hide(); jQuery('.track-checkbox').attr('checked', false);" ) do  %>
   <%= button_to_function "select all tracks", "jQuery('.track-checkbox').attr('checked', true);"  %>
   <%= submit_tag "queue all selected" %>
   <%= button_to_function "clear selections", "jQuery('.track-checkbox').attr('checked', false);"  %>
