@@ -7,10 +7,12 @@ module ApplicationHelper
     url_for(old_params.merge(new_params))
   end
 
-  def album_art_image_tag(track)
+  def album_art_image_tag
     return if @state == "stopped"
-    @iTunes.create_artwork_for_current_track
-    path = @iTunes.artwork_file(@iTunes.currentTrack) 
+    # if paused, the track can be determined from current_track_index, so we
+    # use it for both states
+    logger.debug "current track for art: #{@current_track}"
+    path = @iTunes.artwork_file(@current_track) 
     if path
       image_tag( path, :size => "200x200")
     else

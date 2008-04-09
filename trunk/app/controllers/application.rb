@@ -34,6 +34,7 @@ class ApplicationController < ActionController::Base
     # or just use error handling
     if @state.to_s.strip != 'stopped'
       @current_track_index = `osascript -e 'tell application "iTunes" to index of current track as string'`.to_i
+      @current_track = @queued_tracks[@current_track_index - 1]
     else
       logger.debug "Setting current track index to 0"
       @current_track_index = 0
