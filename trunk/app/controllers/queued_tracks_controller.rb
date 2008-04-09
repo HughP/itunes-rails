@@ -113,8 +113,9 @@ class QueuedTracksController < ApplicationController
     index = params[:id].to_i + 1
     logger.debug "index: #{index}"
     logger.debug "current_track: #{@current_track_index}"
-    if @state.strip.to_s != "playing"
+    if @state.strip.to_s == "stopped"
       logger.debug "Trying to start playlist..."
+      @iTunes.queue.playOnce(1)
     end
     # user is just changing volume, skip this
     # TODO refactor this to be more straightforward
