@@ -42,7 +42,7 @@
   / <%= @current_track.artist %>
   / <%= @current_track.album %></p>
   <script>
-    jQuery('title').html("iTunes Rails :: <%= h @current_track.artist %> :: <%= h @current_track.name %>");
+    jQuery('title').html("iTunes Rails :: <%= h @current_track.artist.gsub("'", "\\'") %> :: <%= h @current_track.name.gsub("'", "\\'") %>");
   </script>
   <% else %>
   <script>
