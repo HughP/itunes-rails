@@ -41,6 +41,9 @@
   <p><%= @current_track.name %>
   / <%= @current_track.artist %>
   / <%= @current_track.album %></p>
+  <script>
+    jQuery('title').html('iTunes Rails :: <%= @current_track.artist %> :: <%= @current_track.name %>');
+  </script>
   <% end %>
 
   <h2>queue
