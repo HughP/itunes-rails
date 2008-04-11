@@ -5,7 +5,12 @@ class TracksController < ApplicationController
     # queuing multiple tracks
     if params[:tracks]
       track_ids = params[:tracks].map {|track_id| track_id.to_i}
-      tracks = track_ids.collect{ |id| @iTunes.find_track(id) }
+      # maybe this is slow:
+      # TODO try something faster
+        
+      #tracks = track_ids.collect{ |id| @iTunes.find_track(id) }
+      tracks = @iTunes.find_tracks(track_ids)
+      logger.debug(tracks.inspect)
       logger.debug "queuing multiple tracks"
       @iTunes.queue_tracks(tracks, session[:username] || "")
     elsif params[:id] && params[:id] != "multiple"  # queuing one track
