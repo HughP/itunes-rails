@@ -44,6 +44,10 @@
   <script>
     jQuery('title').html('iTunes Rails :: <%= @current_track.artist %> :: <%= @current_track.name %>');
   </script>
+  <% else %>
+  <script>
+    jQuery('title').html('iTunes Rails');
+  </script>
   <% end %>
 
   <h2>queue
