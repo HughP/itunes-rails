@@ -51,6 +51,11 @@ class ITunes
     end
   end
 
+  def find_tracks(track_ids)
+    predicate = OSX::NSPredicate.predicateWithFormat("databaseID IN {%s}" % track_ids.join(','))
+    library.tracks.filteredArrayUsingPredicate(predicate)
+  end
+
   def add_track_to_playlist(track, playlist)
     if playlist.is_a?(String)
       playlist = playlist_by_name(playlist)
