@@ -20,8 +20,9 @@ class PlaylistsController < ApplicationController
       @offset = (params[:offset] || 0).to_i
       @limit = 500
       if order
-        @tracks = @playlist.tracks.sort_by {|t| t.send(order)}[@offset,@limit]
-        #@tracks = @playlist.tracks.sortedArrayUsingSelector(order.to_sym)[@offset,@limit]
+        #@tracks = @playlist.tracks.sort_by {|t| t.send(order)}[@offset,@limit]
+        descriptor = OSX::NSSortDescriptor.alloc.initWithKey_ascending(order, true)
+        @tracks = @playlist.tracks.sortedArrayUsingDescriptors([descriptor])[@offset,@limit]
       else
         @tracks = @playlist.tracks[@offset,@limit]
       end

@@ -12,8 +12,7 @@
   <%= link_to_function "instructions", "jQuery('#instructions').toggle()"  %>
   </p>
   <div id="instructions" style="display:none;padding: 0.5em">
-    <p>Click "que" to add to the end of queue. Beware that ordering by artist, track, or album is currently slow for very large playlists.
-    If a song you try to queue doesn't appear in the queue, it may not be locatable by iTunes (e.g. on a hard drive that isn't connected to your computer.)</p>
+    <p>Click "que" to add to the end of queue. If a song you try to queue doesn't appear in the queue, it may not be locatable by iTunes (e.g. on a hard drive that isn't connected to your computer.)</p>
 
     <p>iTunesRails creates an "itunes-rails" playlist to hold the tracks that you queue. Be warned that iTunesRails uses the "comment" field of an iTunes track's metadata to remember who last queued a particular track. So if you have written anything important there, don't queue those tracks with iTunesRails. </p>
   </div>

@@ -120,12 +120,25 @@ describe ITunes do
   end
 
   it "should set the queue playlist as the front window" do 
+    pending "tested"
     puts @i.browserWindows.first.view.name
     # call this method:
     @i.select_queue_playlist
     @i.browserWindows.first.view.name.should == ITunes::QUEUE_PLAYLIST
-
     # @i.queue.duplicateTo(@i.playlistWindows)
+  end
+
+  it "should sort the tracks according to a selector" do
+    tracks = @i.playlist_by_name("Purchased").tracks
+    # unsorted
+    puts tracks.map {|t| t.artist.to_s}
+    puts "-" * 80
+
+    # false for descending
+    descriptor = OSX::NSSortDescriptor.alloc.initWithKey_ascending("artist", true)
+    new_tracks = tracks.sortedArrayUsingDescriptors([descriptor])
+    # should be sorted
+    puts new_tracks.map {|t| t.artist.to_s}
 
   end
 end
