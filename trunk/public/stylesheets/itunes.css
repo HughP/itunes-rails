@@ -1,3 +1,5 @@
+/* @override http://localhost:3000/stylesheets/itunes.css?1208270679 */
+
 body {
   font-family: Helvetica, Arial;
   font-size: small;
@@ -9,6 +11,13 @@ body {
   background-color:red;
   color:white;
   padding: 5px;
+}
+
+a {
+	color: #333;
+}
+tr:hover{
+	background-color: #7492bc;
 }
 .playlist-title {
   display:inline

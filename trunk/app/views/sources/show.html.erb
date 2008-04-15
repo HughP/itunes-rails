@@ -3,7 +3,7 @@
 <h2>Playlists</h2>
 <table>
 <% @source.playlists.each_with_index do |playlist, index| %>
-  <tr>
+  <tr onclick="location.href='<%= source_playlist_path(params[:id], index) %>'">
     <% if playlist.name == "Party Shuffle" %>
     <td><%= playlist.name %></td>
     <% else %>
