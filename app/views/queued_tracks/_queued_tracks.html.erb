@@ -35,7 +35,7 @@
   / <%= link_to_remote "toggle shuffle mode", :url => {:controller => "queued_tracks", :action => "toggle_shuffle" },
       :loading => "$('queue-changing').show()", :complete => "$('queue-changing').hide()"  %>
 
-  <% if @state != "stopped" %>
+  <% if @state != "stopped" and @current_track %>
   <h2>currently playing</h2>
   <%= album_art_image_tag unless @state == "stopped" %>
   <p><%= @current_track.name %>
