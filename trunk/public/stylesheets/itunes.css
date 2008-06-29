@@ -1,4 +1,17 @@
+
+
+#liveSearch {
+  display:inline;
+}
+div#loader {
+  background: url(/ajax-loader.gif);
+  height:16px;
+  width:16px;
+  float:left;
+}
+
 /* @override http://localhost:3000/stylesheets/itunes.css?1208270679 */
+
 
 body {
   font-family: Helvetica, Arial;
