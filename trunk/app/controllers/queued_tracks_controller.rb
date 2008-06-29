@@ -67,6 +67,15 @@ class QueuedTracksController < ApplicationController
     end
   end
 
+  # Plays one track, identified by track ID
+  def play
+    trackID = params[:id]
+    @track = @iTunes.find_track(trackID.to_i)
+    @track.play
+    return :nothing => true
+  end
+
+
   def playpause
     if @state == "stopped"
       @iTunes.queue.playOnce(1)
@@ -122,7 +131,22 @@ class QueuedTracksController < ApplicationController
   end
 
   def play_now
-    index = params[:id].to_i + 1
+    index = if params[:id]
+
+              params[:id].to_i + 1
+            elsif params[:trackID]
+              # add the track to the queue
+              track = @iTunes.find_track(params[:trackID].to_i)
+              logger.debug(track)
+              logger.debug(track.databaseID)
+              track.enabled = true # just in case
+              track.comment = session[:username] || "" # credit for queuing the song
+              logger.debug "queuing a track"
+              @iTunes.queue.tracks.removeAllObjects
+              @iTunes.queue_track(track)
+
+              0
+            end
     logger.debug "index: #{index}"
     logger.debug "current_track: #{@current_track_index}"
     if @state.strip.to_s == "stopped"
@@ -160,6 +184,7 @@ class QueuedTracksController < ApplicationController
           @iTunes.nextTrack
         end
       end
+      logger.debug("creating artwork")
       @iTunes.create_artwork_for_current_track
     end
     respond_to do |format|

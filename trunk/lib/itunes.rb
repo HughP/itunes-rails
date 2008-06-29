@@ -123,8 +123,11 @@ class ITunes
 
   def create_artwork_for_current_track
     # check if it exists
+    track = @app.currentTrack
+
     return if artwork_file(@app.currentTrack)
     return if @app.currentTrack.artworks.empty?
+    puts "Trying to create artwork for #{track.name.to_s}"
     extension = `osascript -e '
     tell application "iTunes"
       set theTrack to current track
@@ -150,15 +153,54 @@ class ITunes
     `tail -c+223 #{RAILS_ROOT}/public/tempfile.* > #{RAILS_ROOT}/public/artwork/#{filename}#{extension.strip} && rm #{RAILS_ROOT}/public/tempfile.*`
   end
 
+  def create_artwork_for_track(track)
+
+    if track.artworks.empty?
+      puts "#{track.name.to_s} has no artwork"
+      return
+    end
+    puts "Trying to create artwork for #{track.name.to_s}"
+    extension = `osascript -e '
+    tell application "iTunes"
+      set theTrack to current track
+      set artData to (data of artwork 1 of theTrack) as picture
+      set artFormat to (format of artwork 1 of theTrack) as string
+      
+      if artFormat contains "JPEG" then
+        set extension to ".jpg"
+      else if artFormat contains "PNG" then
+        set extension to ".png"
+      end if
+      set fileName to "test"
+      set tempArtFile to "#{RAILS_ROOT}/public/tempfile" & extension
+      set fileRef to (open for access tempArtFile write permission 1)
+      write artData starting at 0 to fileRef as picture
+      close access fileRef
+      return extension as string
+    end tell' `
+
+    filename = artwork_filename(track)
+    puts filename
+    
+    `tail -c+223 #{RAILS_ROOT}/public/tempfile.* > #{RAILS_ROOT}/public/artwork/#{filename}#{extension.strip} && rm #{RAILS_ROOT}/public/tempfile.*`
+
+  end
+
+
   def artwork_filename(track)
     # Keep the filenames short, esp. in the case of classical music artist and
     # album data, which are often way too long
+    puts "In artwork_filename method"
+    return unless track
+
+    return unless track.artist
     artist = track.artist.to_s.strip.gsub(/[\W\-_]*/,'')[0,15]
     album = track.album.to_s.strip.gsub(/[\W\-_]*/,'')[0,15]
     "%s-%s" % [artist, album]
   end
 
   def artwork_file(track)
+    puts "In artwork_file method"
     web_path = "/artwork/" + artwork_filename(track) 
     filename = RAILS_ROOT + "/public" + web_path
 

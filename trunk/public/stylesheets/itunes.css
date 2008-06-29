@@ -35,10 +35,6 @@ tr:hover{
 .playlist-title {
   display:inline
 }
-#artist-list {
-  position: absolute;
-  width: 15%;
-}
 #library-list p {
   margin-top:0;
 }
@@ -53,9 +49,7 @@ tr:hover{
   padding-bottom:0.3em;
 }
 #library-list {
-  position: absolute;
-  margin-left: 17%;
-  width: 50%;
+ 
 }
 #playlist-nav-controls { position:relative; }
 #playlist-switcher {
@@ -66,12 +60,19 @@ tr:hover{
   right: 10px;
 }
 #browser {
-  width: 69%;
+  width: 60%;
   padding: 1em;
   float:left;
 }
+#js-current-track {
+  width: 29%;
+  position: fixed;
+  right: 0;
+  padding: 1em;
+  padding-right: 3em;
+}
 #queue {
-  width: 25%;
+  width: 29%;
   float: left;
   padding: 1em;
 }
