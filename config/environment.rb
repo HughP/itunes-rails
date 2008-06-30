@@ -59,12 +59,8 @@ Rails::Initializer.run do |config|
 end
 
 require 'osx/cocoa'
-# TODO maybe catch and raise an exception here if cocoa is not on path. Suggest
-# solutions, like running the Mac OS X version of ruby
-#
 OSX.require_framework 'ScriptingBridge'
 require 'lib/itunes.rb' 
-require 'lib/itunes_objects.rb' 
 ITUNES = ITunes.new
 ITUNES_RAILS_VERSION = '0.8.1'
 

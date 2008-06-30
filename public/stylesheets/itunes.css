@@ -1,17 +1,4 @@
-
-
-#liveSearch {
-  display:inline;
-}
-div#loader {
-  background: url(/ajax-loader.gif);
-  height:16px;
-  width:16px;
-  float:left;
-}
-
 /* @override http://localhost:3000/stylesheets/itunes.css?1208270679 */
-
 
 body {
   font-family: Helvetica, Arial;
@@ -35,6 +22,10 @@ tr:hover{
 .playlist-title {
   display:inline
 }
+#artist-list {
+  position: absolute;
+  width: 15%;
+}
 #library-list p {
   margin-top:0;
 }
@@ -49,7 +40,9 @@ tr:hover{
   padding-bottom:0.3em;
 }
 #library-list {
- 
+  position: absolute;
+  margin-left: 17%;
+  width: 50%;
 }
 #playlist-nav-controls { position:relative; }
 #playlist-switcher {
@@ -60,19 +53,12 @@ tr:hover{
   right: 10px;
 }
 #browser {
-  width: 60%;
+  width: 69%;
   padding: 1em;
   float:left;
 }
-#js-current-track {
-  width: 29%;
-  position: fixed;
-  right: 0;
-  padding: 1em;
-  padding-right: 3em;
-}
 #queue {
-  width: 29%;
+  width: 25%;
   float: left;
   padding: 1em;
 }
